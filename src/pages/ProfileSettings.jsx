@@ -1,3 +1,6 @@
+// This page is no longer used and can be deleted.
+
+// The rest of the file content has been removed.
 import React, { useState } from 'react';
 import './ProfileSettings.css';
 

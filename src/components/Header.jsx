@@ -1,3 +1,4 @@
+// This component is no longer used and can be deleted.
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Header.css';

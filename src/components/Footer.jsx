@@ -56,4 +56,5 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+// This component is no longer used and can be deleted.
+// export default Footer;

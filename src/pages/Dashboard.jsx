@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Dashboard.css';
 
@@ -27,12 +27,21 @@ const Dashboard = () => {
     }
   };
 
+  const [doctorName, setDoctorName] = useState('');
+  useEffect(() => {
+    const doc = localStorage.getItem('currentDoctor');
+    if (doc) {
+      const d = JSON.parse(doc);
+      setDoctorName(`${d.first_name} ${d.last_name}`);
+    }
+  }, []);
+
   return (
     <div className="dashboard">
       <div className="dashboard-container">
         <div className="dashboard-header">
           <h1>Dashboard</h1>
-          <p>Welcome back, Dr. Smith. Here's your patient overview for today.</p>
+          <p>Welcome back{doctorName ? `, Dr. ${doctorName}` : ''}. Here's your patient overview for today.</p>
         </div>
 
         {/* Stats Cards */}

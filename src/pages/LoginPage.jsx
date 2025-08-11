@@ -1,5 +1,7 @@
+
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { supabase } from '../supabaseClient';
 import './LoginPage.css';
 
 const LoginPage = () => {
@@ -8,6 +10,7 @@ const LoginPage = () => {
     password: ''
   });
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -20,13 +23,22 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    
-    // Simulate authentication
-    setTimeout(() => {
-      setLoading(false);
-      // Navigate to dashboard after successful login
+    setError('');
+
+    // Query Supabase doctors table for matching email and password
+    const { data, error: supaError } = await supabase
+      .from('doctors')
+      .select('*')
+      .eq('email', formData.email)
+      .eq('password', formData.password)
+      .single();
+    setLoading(false);
+    if (supaError || !data) {
+      setError('Invalid email or password');
+    } else {
+      localStorage.setItem('currentDoctor', JSON.stringify(data));
       navigate('/dashboard');
-    }, 1000);
+    }
   };
 
   return (
@@ -34,7 +46,6 @@ const LoginPage = () => {
       <div className="login-container">
         <div className="login-form-wrapper">
           <div className="login-header">
-            <Link to="/" className="back-to-home">← Back to Home</Link>
             <h1>DiaSight</h1>
             <h2>Login / Authentication</h2>
           </div>
@@ -66,20 +77,17 @@ const LoginPage = () => {
               />
             </div>
 
+            {error && <div className="error-message">{error}</div>}
+
             <button type="submit" className="login-btn" disabled={loading}>
               {loading ? 'Logging in...' : 'Login'}
             </button>
-
-            <div className="form-links">
-              <Link to="/forgot-password" className="forgot-password-link">
-                Forgot Password?
-              </Link>
-            </div>
           </form>
 
           <div className="login-info">
             <p>Welcome to DiaSight - Your AI-powered diabetes management platform</p>
             <p>Please login to access your dashboard and patient management tools.</p>
+            <p style={{fontSize: '0.9em', color: '#888'}}>Demo: dr.john@example.com / password123</p>
           </div>
         </div>
       </div>
