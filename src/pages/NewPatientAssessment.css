@@ -1,3 +1,121 @@
+/* --- New Patient Assessment Modern Styles --- */
+.new-patient-assessment {
+  min-height: 100vh;
+  background: #f4f8fc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+}
+
+.assessment-container {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(33, 150, 243, 0.10);
+  padding: 2.5rem 2.5rem 2rem 2.5rem;
+  max-width: 600px;
+  width: 100%;
+}
+
+.assessment-form {
+  margin-top: 1.5rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+@media (max-width: 700px) {
+  .assessment-container {
+    padding: 1.2rem;
+  }
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #1976D2;
+  letter-spacing: 0.01em;
+}
+
+.form-group input,
+.form-group select {
+  padding: 0.8rem 0.9rem;
+  border: 1.5px solid #e3e8f0;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: #f6f8fa;
+  color: #222;
+  outline: none;
+  transition: border 0.2s;
+}
+.form-group input:focus,
+.form-group select:focus {
+  border: 1.5px solid #2196F3;
+}
+
+.back-btn {
+  background: #f3f3f3;
+  color: #1976D2;
+  border: 1.5px solid #e3e8f0;
+  border-radius: 6px;
+  padding: 0.5rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, border 0.2s;
+  margin-bottom: 0.5rem;
+}
+.back-btn:hover {
+  background: #e0e0e0;
+  border-color: #2196F3;
+  color: #1976D2;
+}
+
+.submit-btn {
+  margin-top: 1.5rem;
+  width: 100%;
+  background: #2196F3;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 1rem 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(33, 150, 243, 0.08);
+  transition: background 0.2s;
+}
+.submit-btn:hover:not(:disabled) {
+  background: #1976D2;
+}
+.submit-btn:disabled {
+  background: #b0c4de;
+  cursor: not-allowed;
+}
+
+.error-message {
+  color: #e74c3c;
+  background: #fbeaea;
+  border: 1px solid #e74c3c;
+  border-radius: 4px;
+  padding: 0.75rem 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  text-align: center;
+}
 /* Back Button Styles */
 .back-btn {
   background: #f3f3f3;
