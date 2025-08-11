@@ -1,242 +1,40 @@
-.new-patient-assessment {
-  min-height: calc(100vh - 140px);
-  background: #f8f9fa;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
-  padding: 2rem 0;
-}
-
-.assessment-container {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-
-/* Header */
-.assessment-header {
-  text-align: center;
-  margin-bottom: 3rem;
-}
-
-.assessment-header h1 {
-  color: #2c3e50;
-  font-size: 2.5rem;
-  margin: 0 0 2rem 0;
-  font-weight: 700;
-}
-
-/* Progress Bar */
-.progress-bar {
-  position: relative;
-  margin-bottom: 2rem;
-}
-
-.progress-steps {
-  display: flex;
-  justify-content: space-between;
-  position: relative;
-  z-index: 2;
-}
-
-.progress-step {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: white;
-  padding: 0.5rem;
-  border-radius: 8px;
-}
-
-.step-number {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: #e9ecef;
-  color: #6c757d;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-  transition: all 0.3s;
-}
-
-.progress-step.active .step-number {
-  background: #2196F3;
-  color: white;
-}
-
-.step-label {
-  font-size: 0.8rem;
-  color: #6c757d;
-  font-weight: 500;
-  text-align: center;
-}
-
-.progress-step.active .step-label {
-  color: #2196F3;
-}
-
-.progress-line {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: #e9ecef;
-  transform: translateY(-50%);
-  z-index: 1;
-}
-
-.progress-fill {
-  height: 100%;
-  background: #2196F3;
-  transition: width 0.3s ease;
-}
-
-/* Form Styles */
-.assessment-form {
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-  overflow: hidden;
-}
-
-.step-content {
-  padding: 2rem;
-}
-
-.step-content h3 {
-  color: #2c3e50;
-  font-size: 1.5rem;
-  margin: 0 0 1.5rem 0;
-  font-weight: 600;
-}
-
-/* Form Grid */
-.form-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-}
-
-.form-group.full-width {
-  grid-column: 1 / -1;
-}
-
-.form-group label {
-  font-weight: 500;
-  margin-bottom: 0.5rem;
-  color: #2c3e50;
-}
-
-.form-group input,
-.form-group select,
-.form-group textarea {
-  padding: 0.75rem;
-  border: 2px solid #e9ecef;
+/* Back Button Styles */
+.back-btn {
+  background: #f3f3f3;
+  color: #333;
+  border: 1px solid #ccc;
   border-radius: 6px;
+  padding: 0.5rem 1.2rem;
   font-size: 1rem;
-  transition: border-color 0.3s;
-  font-family: inherit;
-}
-
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus {
-  outline: none;
-  border-color: #2196F3;
-}
-
-/* Symptoms Grid */
-.symptoms-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 0.75rem;
-  margin-top: 0.5rem;
-}
-
-.checkbox-label {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+  font-weight: 500;
   cursor: pointer;
-  padding: 0.5rem;
-  border-radius: 4px;
+  transition: background 0.2s, border 0.2s;
+  margin-bottom: 0.5rem;
+}
+.back-btn:hover {
+  background: #e0e0e0;
+  border-color: #2196F3;
+  color: #1976D2;
+}
+/* Submit Button Styles */
+.submit-btn {
+  margin-top: 1.5rem;
+  width: 100%;
+  background: #2196F3;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.9rem 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
   transition: background 0.2s;
 }
-
-.checkbox-label:hover {
-  background: #f8f9fa;
+.submit-btn:hover:not(:disabled) {
+  background: #1976D2;
 }
 
-.checkbox-label input[type="checkbox"] {
-  margin: 0;
-  transform: scale(1.2);
-}
-
-/* File Upload */
-.file-upload-section {
-  margin-bottom: 2rem;
-}
-
-.file-upload-area {
-  position: relative;
-  border: 2px dashed #ddd;
-  border-radius: 8px;
-  padding: 2rem;
-  text-align: center;
-  transition: border-color 0.3s;
-  margin-bottom: 1rem;
-}
-
-.file-upload-area:hover {
-  border-color: #2196F3;
-  background: #f0f8ff;
-}
-
-.file-input {
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  cursor: pointer;
-}
-
-.file-upload-label {
-  cursor: pointer;
-}
-
-.upload-icon {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-}
-
-.file-upload-label p {
-  margin: 0.5rem 0;
-  color: #2c3e50;
-}
-
-.upload-hint {
-  font-size: 0.9rem;
-  color: #6c757d;
-}
-
-.uploaded-files {
-  background: #f8f9fa;
-  padding: 1rem;
-  border-radius: 6px;
-}
-
-.uploaded-files h4 {
-  margin: 0 0 0.75rem 0;
-  color: #2c3e50;
-  font-size: 1rem;
-}
+/* ...existing code... */
 
 .file-item {
   display: flex;
@@ -274,16 +72,7 @@
 }
 
 .review-group {
-  background: #f8f9fa;
-  padding: 1.5rem;
-  border-radius: 8px;
-}
-
-.review-group h4 {
-  color: #2c3e50;
-  margin: 0 0 1rem 0;
-  font-size: 1.1rem;
-  border-bottom: 1px solid #e9ecef;
+  /* removed orphaned block */
   padding-bottom: 0.5rem;
 }
 

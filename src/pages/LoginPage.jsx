@@ -37,7 +37,7 @@ const LoginPage = () => {
       setError('Invalid email or password');
     } else {
       localStorage.setItem('currentDoctor', JSON.stringify(data));
-      navigate('/dashboard');
+      navigate('/dashboard', { replace: true });
     }
   };
 
@@ -47,7 +47,7 @@ const LoginPage = () => {
         <div className="login-form-wrapper">
           <div className="login-header">
             <h1>DiaSight</h1>
-            <h2>Login / Authentication</h2>
+            <h2>Login</h2>
           </div>
 
           <form onSubmit={handleSubmit} className="login-form">
@@ -85,9 +85,8 @@ const LoginPage = () => {
           </form>
 
           <div className="login-info">
-            <p>Welcome to DiaSight - Your AI-powered diabetes management platform</p>
+            <p>Welcome to DiaSight - Your AI-powered diabetic retinopathy classification platform</p>
             <p>Please login to access your dashboard and patient management tools.</p>
-            <p style={{fontSize: '0.9em', color: '#888'}}>Demo: dr.john@example.com / password123</p>
           </div>
         </div>
       </div>

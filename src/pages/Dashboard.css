@@ -1,3 +1,18 @@
+/* Logout Button */
+.logout-btn {
+  background: #e74c3c;
+  color: #fff;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-right: 8px;
+}
+.logout-btn:hover {
+  background: #c0392b;
+}
 .dashboard {
   min-height: calc(100vh - 140px);
   background: #f8f9fa;

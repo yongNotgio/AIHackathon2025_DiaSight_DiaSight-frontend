@@ -1,8 +1,10 @@
+
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import './Dashboard.css';
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const [stats] = useState({
     totalPatients: 245,
     newAssessments: 12,
@@ -36,12 +38,20 @@ const Dashboard = () => {
     }
   }, []);
 
+  const handleLogout = () => {
+    localStorage.removeItem('currentDoctor');
+    navigate('/', { replace: true });
+  };
+
   return (
     <div className="dashboard">
       <div className="dashboard-container">
-        <div className="dashboard-header">
-          <h1>Dashboard</h1>
-          <p>Welcome back{doctorName ? `, Dr. ${doctorName}` : ''}. Here's your patient overview for today.</p>
+        <div className="dashboard-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div>
+            <h1>Dashboard</h1>
+            <p>Welcome back{doctorName ? `, Dr. ${doctorName}` : ''}. Here's your patient overview for today.</p>
+          </div>
+          <button onClick={handleLogout} className="logout-btn">Log Out</button>
         </div>
 
         {/* Stats Cards */}
@@ -83,7 +93,7 @@ const Dashboard = () => {
         <div className="dashboard-actions">
           <h2>Quick Actions</h2>
           <div className="action-buttons">
-            <Link to="/new-patient" className="action-btn primary">
+            <Link to="/new-assessment" className="action-btn primary">
               <div className="btn-icon">➕</div>
               <div className="btn-content">
                 <h3>New Patient Assessment</h3>
