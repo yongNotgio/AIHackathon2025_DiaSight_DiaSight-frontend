@@ -1,90 +1,90 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './AuditLogs.css';
+import { fetchAuditLogs } from '../queries/auditLabsQuery';
 
 const AuditLogs = () => {
-  const [doctors] = useState([
-    { id: 'DR001', name: 'Dr. Sarah Johnson', specialization: 'Endocrinologist', location: 'New York, NY', rating: 4.9, patients: 245 },
-    { id: 'DR002', name: 'Dr. Michael Chen', specialization: 'Diabetologist', location: 'Los Angeles, CA', rating: 4.8, patients: 189 },
-    { id: 'DR003', name: 'Dr. Emily Rodriguez', specialization: 'Internal Medicine', location: 'Chicago, IL', rating: 4.7, patients: 201 },
-    { id: 'DR004', name: 'Dr. David Kumar', specialization: 'Endocrinologist', location: 'Houston, TX', rating: 4.9, patients: 167 },
-    { id: 'DR005', name: 'Dr. Lisa Wang', specialization: 'Family Medicine', location: 'Phoenix, AZ', rating: 4.6, patients: 134 },
-    { id: 'DR006', name: 'Dr. James Thompson', specialization: 'Diabetologist', location: 'Philadelphia, PA', rating: 4.8, patients: 198 },
-  ]);
-
-  const [patients] = useState([
-    { id: 'P001', name: 'John Smith', age: 45, diabetesType: 'Type 2', lastVisit: '2025-01-10', status: 'Active', doctorAssigned: 'DR001' },
-    { id: 'P002', name: 'Sarah Johnson', age: 38, diabetesType: 'Type 1', lastVisit: '2025-01-09', status: 'Pending Review', doctorAssigned: 'DR002' },
-    { id: 'P003', name: 'Michael Davis', age: 52, diabetesType: 'Type 2', lastVisit: '2025-01-08', status: 'Completed', doctorAssigned: 'DR001' },
-    { id: 'P004', name: 'Emily Wilson', age: 41, diabetesType: 'Type 1', lastVisit: '2025-01-07', status: 'Active', doctorAssigned: 'DR003' },
-    { id: 'P005', name: 'Robert Brown', age: 48, diabetesType: 'Type 2', lastVisit: '2025-01-06', status: 'Pending Review', doctorAssigned: 'DR004' },
-    { id: 'P006', name: 'Lisa Garcia', age: 35, diabetesType: 'Type 1', lastVisit: '2025-01-05', status: 'Active', doctorAssigned: 'DR002' },
-    { id: 'P007', name: 'Daniel Martinez', age: 43, diabetesType: 'Type 2', lastVisit: '2025-01-04', status: 'Completed', doctorAssigned: 'DR005' },
-    { id: 'P008', name: 'Jennifer Lee', age: 39, diabetesType: 'Type 1', lastVisit: '2025-01-03', status: 'Active', doctorAssigned: 'DR006' },
-  ]);
-
-  const [selectedView, setSelectedView] = useState('doctors');
+  const navigate = useNavigate();
+  const [auditLogs, setAuditLogs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredData, setFilteredData] = useState([]);
 
+  // Fetch audit logs on component mount
   useEffect(() => {
-    const data = selectedView === 'doctors' ? doctors : patients;
-    const filtered = data.filter(item =>
-      item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (selectedView === 'doctors' && item.specialization.toLowerCase().includes(searchTerm.toLowerCase())) ||
-      (selectedView === 'patients' && item.diabetesType.toLowerCase().includes(searchTerm.toLowerCase()))
+    const loadAuditLogs = async () => {
+      setLoading(true);
+      const { data, error } = await fetchAuditLogs();
+      
+      if (error) {
+        setError(error);
+      } else {
+        setAuditLogs(data);
+      }
+      setLoading(false);
+    };
+
+    loadAuditLogs();
+  }, []);
+
+  // Filter audit logs based on search term
+  useEffect(() => {
+    const filtered = auditLogs.filter(log =>
+      log.doctorName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      log.labId.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      log.riskClassification.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      log.auditId.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setFilteredData(filtered);
-  }, [selectedView, searchTerm, doctors, patients]);
+  }, [searchTerm, auditLogs]);
 
-  const handleViewPatient = (patientId) => {
-    alert(`Viewing details for patient: ${patientId}`);
+  const handleViewDetails = (labId) => {
+    alert(`Viewing lab details for: ${labId}`);
   };
 
-  const handleAssignDoctor = (patientId) => {
-    alert(`Assigning doctor to patient: ${patientId}`);
-  };
-
-  const handleContactDoctor = (doctorId) => {
-    alert(`Contacting doctor: ${doctorId}`);
-  };
-
-  const getStatusClass = (status) => {
-    switch (status.toLowerCase()) {
-      case 'active': return 'status-active';
-      case 'pending review': return 'status-pending';
-      case 'completed': return 'status-completed';
+  const getRiskClass = (riskClassification) => {
+    switch (riskClassification.toLowerCase()) {
+      case 'low risk': return 'status-active';
+      case 'moderate risk': return 'status-pending';
+      case 'high risk': return 'status-completed';
       default: return 'status-default';
     }
   };
 
-  const getDoctorName = (doctorId) => {
-    const doctor = doctors.find(d => d.id === doctorId);
-    return doctor ? doctor.name : 'Unassigned';
-  };
+  if (loading) {
+    return (
+      <div className="audit-logs">
+        <div className="audit-logs-container">
+          <div className="loading">Loading audit logs...</div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="audit-logs">
+        <div className="audit-logs-container">
+          <div className="error">Error loading audit logs: {error}</div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="audit-logs">
       <div className="audit-logs-container">
         <div className="audit-logs-header">
+          <button 
+            className="back-button"
+            onClick={() => navigate('/dashboard')}
+            title="Back to Dashboard"
+          >
+            ← Back to Dashboard
+          </button>
           <h1>Audit Logs</h1>
-          <p>Complete list of all doctors specialized in diabetes and patient records sorted by Patient ID.</p>
-        </div>
-
-        {/* View Toggle */}
-        <div className="view-toggle">
-          <button
-            className={`toggle-btn ${selectedView === 'doctors' ? 'active' : ''}`}
-            onClick={() => setSelectedView('doctors')}
-          >
-            Doctors List
-          </button>
-          <button
-            className={`toggle-btn ${selectedView === 'patients' ? 'active' : ''}`}
-            onClick={() => setSelectedView('patients')}
-          >
-            Patients List
-          </button>
+          <p>Complete audit trail of all lab entries showing doctor details, lab data, and risk classifications.</p>
         </div>
 
         {/* Search Bar */}
@@ -92,7 +92,7 @@ const AuditLogs = () => {
           <div className="search-bar">
             <input
               type="text"
-              placeholder={`Search ${selectedView}...`}
+              placeholder="Search audit logs..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="search-input"
@@ -100,135 +100,71 @@ const AuditLogs = () => {
             <span className="search-icon">🔍</span>
           </div>
           <div className="results-count">
-            Showing {filteredData.length} {selectedView}
+            Showing {filteredData.length} audit entries
           </div>
         </div>
 
-        {/* Doctors Table */}
-        {selectedView === 'doctors' && (
-          <div className="data-table-section">
-            <h2>Diabetes Specialists</h2>
-            <div className="data-table">
-              <div className="table-header">
-                <div className="table-cell">Doctor ID</div>
-                <div className="table-cell">Name</div>
-                <div className="table-cell">Specialization</div>
-                <div className="table-cell">Location</div>
-                <div className="table-cell">Rating</div>
-                <div className="table-cell">Patients</div>
-                <div className="table-cell">Actions</div>
-              </div>
-              
-              {filteredData.map((doctor) => (
-                <div key={doctor.id} className="table-row">
-                  <div className="table-cell font-medium">{doctor.id}</div>
-                  <div className="table-cell font-medium">{doctor.name}</div>
-                  <div className="table-cell">{doctor.specialization}</div>
-                  <div className="table-cell">{doctor.location}</div>
-                  <div className="table-cell">
-                    <div className="rating">
-                      ⭐ {doctor.rating}
-                    </div>
-                  </div>
-                  <div className="table-cell">{doctor.patients}</div>
-                  <div className="table-cell">
-                    <button
-                      onClick={() => handleContactDoctor(doctor.id)}
-                      className="action-btn contact-btn"
-                    >
-                      Contact
-                    </button>
-                  </div>
-                </div>
-              ))}
+        {/* Audit Logs Table */}
+        <div className="data-table-section">
+          <h2>Lab Entry Audit Trail</h2>
+          <div className="data-table">
+            <div className="table-header">
+              <div className="table-cell">Audit ID</div>
+              <div className="table-cell">Date Created</div>
+              <div className="table-cell">Doctor</div>
+              <div className="table-cell">Lab ID</div>
+              <div className="table-cell">Risk Classification</div>
+              <div className="table-cell">Actions</div>
             </div>
             
-            {filteredData.length === 0 && (
-              <div className="no-results">
-                <p>No doctors found matching your search.</p>
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* Patients Table */}
-        {selectedView === 'patients' && (
-          <div className="data-table-section">
-            <h2>Patient Records</h2>
-            <div className="data-table">
-              <div className="table-header">
-                <div className="table-cell">Patient ID</div>
-                <div className="table-cell">Name</div>
-                <div className="table-cell">Age</div>
-                <div className="table-cell">Diabetes Type</div>
-                <div className="table-cell">Last Visit</div>
-                <div className="table-cell">Status</div>
-                <div className="table-cell">Assigned Doctor</div>
-                <div className="table-cell">Actions</div>
-              </div>
-              
-              {filteredData.map((patient) => (
-                <div key={patient.id} className="table-row">
-                  <div className="table-cell font-medium">{patient.id}</div>
-                  <div className="table-cell font-medium">{patient.name}</div>
-                  <div className="table-cell">{patient.age}</div>
-                  <div className="table-cell">{patient.diabetesType}</div>
-                  <div className="table-cell">{patient.lastVisit}</div>
-                  <div className="table-cell">
-                    <span className={`status ${getStatusClass(patient.status)}`}>
-                      {patient.status}
-                    </span>
-                  </div>
-                  <div className="table-cell doctor-name">
-                    {getDoctorName(patient.doctorAssigned)}
-                  </div>
-                  <div className="table-cell">
-                    <div className="action-buttons">
-                      <button
-                        onClick={() => handleViewPatient(patient.id)}
-                        className="action-btn view-btn"
-                        title="View Details"
-                      >
-                        👁️
-                      </button>
-                      <button
-                        onClick={() => handleAssignDoctor(patient.id)}
-                        className="action-btn assign-btn"
-                        title="Assign Doctor"
-                      >
-                        👨‍⚕️
-                      </button>
-                    </div>
-                  </div>
+            {filteredData.map((log) => (
+              <div key={log.auditId} className="table-row">
+                <div className="table-cell font-medium">{log.auditId}</div>
+                <div className="table-cell">{log.dateCreated}</div>
+                <div className="table-cell font-medium">{log.doctorName}</div>
+                <div className="table-cell">{log.labId}</div>
+                <div className="table-cell">
+                  <span className={`status ${getRiskClass(log.riskClassification)}`}>
+                    {log.riskClassification}
+                  </span>
                 </div>
-              ))}
-            </div>
-            
-            {filteredData.length === 0 && (
-              <div className="no-results">
-                <p>No patients found matching your search.</p>
+                <div className="table-cell">
+                  <button
+                    onClick={() => handleViewDetails(log.labId)}
+                    className="action-btn view-btn"
+                    title="View Lab Details"
+                  >
+                    �️
+                  </button>
+                </div>
               </div>
-            )}
+            ))}
           </div>
-        )}
+          
+          {filteredData.length === 0 && !loading && (
+            <div className="no-results">
+              <p>No audit logs found matching your search.</p>
+            </div>
+          )}
+        </div>
 
         {/* Summary Stats */}
         <div className="summary-stats">
           <div className="stat-item">
-            <h3>Total Doctors</h3>
-            <p>{doctors.length} specialists</p>
+            <h3>Total Entries</h3>
+            <p>{auditLogs.length} logs</p>
           </div>
           <div className="stat-item">
-            <h3>Total Patients</h3>
-            <p>{patients.length} records</p>
+            <h3>Low Risk</h3>
+            <p>{auditLogs.filter(log => log.riskClassification.toLowerCase().includes('low')).length} cases</p>
           </div>
           <div className="stat-item">
-            <h3>Active Cases</h3>
-            <p>{patients.filter(p => p.status === 'Active').length} ongoing</p>
+            <h3>Moderate Risk</h3>
+            <p>{auditLogs.filter(log => log.riskClassification.toLowerCase().includes('moderate')).length} cases</p>
           </div>
           <div className="stat-item">
-            <h3>Pending Reviews</h3>
-            <p>{patients.filter(p => p.status === 'Pending Review').length} waiting</p>
+            <h3>High Risk</h3>
+            <p>{auditLogs.filter(log => log.riskClassification.toLowerCase().includes('high')).length} cases</p>
           </div>
         </div>
       </div>
