@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
+import medicalTeamImage from '../assets/images/medical-team.png';
 import './LoginPage.css';
 
 const LoginPage = () => {
@@ -43,52 +44,63 @@ const LoginPage = () => {
 
   return (
     <div className="login-page">
-      <div className="login-container">
-        <div className="login-form-wrapper">
-          <div className="login-header">
-            <h1>DiaSight</h1>
-            <h2>Login</h2>
-          </div>
-
-          <form onSubmit={handleSubmit} className="login-form">
-            <div className="form-group">
-              <label htmlFor="email">Email Address</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-                placeholder="Enter your email"
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-                placeholder="Enter your password"
-              />
-            </div>
-
-            {error && <div className="error-message">{error}</div>}
-
-            <button type="submit" className="login-btn" disabled={loading}>
-              {loading ? 'Logging in...' : 'Login'}
-            </button>
-          </form>
-
-          <div className="login-info">
-            <p>Welcome to DiaSight - Your AI-powered diabetic retinopathy classification platform</p>
-            <p>Please login to access your dashboard and patient management tools.</p>
+      <div className="login-form-container">
+        <div className="logo-section">
+          <div className="logo">
+            <span className="logo-icon">📋</span>
+            <span className="logo-text">DiaSight</span>
           </div>
         </div>
+
+        <div className="login-header">
+          <h2>Login to Your DiaSight Account</h2>
+          <p>Please enter your account details to sign in to our platform.</p>
+        </div>
+
+        <form onSubmit={handleSubmit} className="login-form">
+          <div className="form-group">
+            <label htmlFor="email">Email or ID</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              placeholder="example@email.com"
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+              placeholder="Enter your password"
+            />
+          </div>
+
+          <div className="form-options">
+            <label className="remember-me">
+              <input type="checkbox" />
+              <span>Remember Me</span>
+            </label>
+          </div>
+
+          {error && <div className="error-message">{error}</div>}
+
+          <button type="submit" className="login-btn" disabled={loading}>
+            {loading ? 'Logging in...' : 'Login'}
+          </button>
+        </form>
+      </div>
+
+      <div className="medical-illustration">
+        <img src={medicalTeamImage} alt="Medical team illustration" className="medical-img" />
       </div>
     </div>
   );

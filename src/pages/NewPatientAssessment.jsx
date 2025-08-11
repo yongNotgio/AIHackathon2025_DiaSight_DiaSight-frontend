@@ -21,8 +21,7 @@ const initialLabState = {
   triglycerides: '',
   ucr: '',
   alt: '',
-  ast: '',
-  dr: '',
+  ast: ''
 };
 
 const NewPatientAssessment = () => {
@@ -103,7 +102,6 @@ const NewPatientAssessment = () => {
             <div className="form-group"><label>UCR</label><input type="number" name="ucr" value={form.ucr} onChange={handleChange} /></div>
             <div className="form-group"><label>ALT</label><input type="number" name="alt" value={form.alt} onChange={handleChange} /></div>
             <div className="form-group"><label>AST</label><input type="number" name="ast" value={form.ast} onChange={handleChange} /></div>
-            <div className="form-group"><label>DR</label><input type="number" name="dr" value={form.dr} onChange={handleChange} /></div>
           </div>
           {error && <div className="error-message">{error}</div>}
           <button type="submit" className="submit-btn" disabled={loading}>{loading ? 'Submitting...' : 'Submit Assessment'}</button>

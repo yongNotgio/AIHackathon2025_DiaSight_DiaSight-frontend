@@ -51,7 +51,7 @@ function App() {
               <Dashboard />
             </PrivateRoute>
           } />
-          <Route path="/new-assessment" element={
+          <Route path="/new-patient-assessment" element={
             <PrivateRoute>
               <NewPatientAssessment />
             </PrivateRoute>

@@ -1,16 +1,57 @@
-
 import React, { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { supabase } from '../supabaseClient';
 import './Dashboard.css';
 
 const Dashboard = () => {
-  const navigate = useNavigate();
-  const [stats] = useState({
-    totalPatients: 245,
-    newAssessments: 12,
-    pendingReviews: 8,
-    completedToday: 15
+  const [stats, setStats] = useState({
+    totalLabs: 0,
+    todaysLabs: 0
   });
+
+  const [loading, setLoading] = useState(true);
+
+  // Fetch lab statistics from Supabase
+  const fetchLabStats = async () => {
+    try {
+      // Get total labs count
+      const { count: totalCount, error: totalError } = await supabase
+        .from('labs')
+        .select('*', { count: 'exact', head: true });
+
+      if (totalError) {
+        console.error('Error fetching total labs:', totalError);
+        return;
+      }
+
+      // Get today's labs count - this resets every day at midnight
+      const today = new Date();
+      const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+      const todayEnd = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
+      
+      const { count: todayCount, error: todayError } = await supabase
+        .from('labs')
+        .select('*', { count: 'exact', head: true })
+        .gte('created_at', todayStart.toISOString())
+        .lt('created_at', todayEnd.toISOString());
+
+      if (todayError) {
+        console.error('Error fetching today\'s labs:', todayError);
+        return;
+      }
+
+      // Update stats with real data
+      setStats({
+        totalLabs: totalCount || 0,
+        todaysLabs: todayCount || 0
+      });
+
+    } catch (error) {
+      console.error('Error in fetchLabStats:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const [recentPatients] = useState([
     { id: 'P001', name: 'John Smith', age: 45, lastVisit: '2025-01-10', status: 'Active' },
@@ -30,61 +71,58 @@ const Dashboard = () => {
   };
 
   const [doctorName, setDoctorName] = useState('');
-  useEffect(() => {
-    const doc = localStorage.getItem('currentDoctor');
-    if (doc) {
-      const d = JSON.parse(doc);
-      setDoctorName(`${d.first_name} ${d.last_name}`);
-    }
-  }, []);
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.removeItem('currentDoctor');
     navigate('/', { replace: true });
   };
+  
+  useEffect(() => {
+    // Fetch doctor name from localStorage
+    const doc = localStorage.getItem('currentDoctor');
+    if (doc) {
+      const d = JSON.parse(doc);
+      setDoctorName(`${d.first_name} ${d.last_name}`);
+    }
+
+    // Fetch lab statistics
+    fetchLabStats();
+  }, []);
 
   return (
     <div className="dashboard">
       <div className="dashboard-container">
-        <div className="dashboard-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <div>
-            <h1>Dashboard</h1>
-            <p>Welcome back{doctorName ? `, Dr. ${doctorName}` : ''}. Here's your patient overview for today.</p>
+        <div className="dashboard-header">
+          <div className="header-content">
+            <div className="header-left">
+              <h1>Dashboard</h1>
+              <p>Welcome back{doctorName ? `, Dr. ${doctorName}` : ''}. Here's your lab overview for today.</p>
+            </div>
+            <div className="header-right">
+              <button onClick={handleLogout} className="logout-btn">
+                <span className="logout-icon">🚪</span>
+                Logout
+              </button>
+            </div>
           </div>
-          <button onClick={handleLogout} className="logout-btn">Log Out</button>
         </div>
 
         {/* Stats Cards */}
         <div className="stats-grid">
           <div className="stat-card">
-            <div className="stat-icon">👥</div>
+            <div className="stat-icon">🧪</div>
             <div className="stat-content">
-              <h3>{stats.totalPatients}</h3>
-              <p>Total Patients</p>
+              <h3>{stats.totalLabs}</h3>
+              <p>Total Labs</p>
             </div>
           </div>
           
           <div className="stat-card">
-            <div className="stat-icon">📋</div>
+            <div className="stat-icon">�</div>
             <div className="stat-content">
-              <h3>{stats.newAssessments}</h3>
-              <p>New Assessments</p>
-            </div>
-          </div>
-          
-          <div className="stat-card">
-            <div className="stat-icon">⏳</div>
-            <div className="stat-content">
-              <h3>{stats.pendingReviews}</h3>
-              <p>Pending Reviews</p>
-            </div>
-          </div>
-          
-          <div className="stat-card">
-            <div className="stat-icon">✅</div>
-            <div className="stat-content">
-              <h3>{stats.completedToday}</h3>
-              <p>Completed Today</p>
+              <h3>{stats.todaysLabs}</h3>
+              <p>Today's Labs</p>
             </div>
           </div>
         </div>
@@ -93,7 +131,7 @@ const Dashboard = () => {
         <div className="dashboard-actions">
           <h2>Quick Actions</h2>
           <div className="action-buttons">
-            <Link to="/new-assessment" className="action-btn primary">
+            <Link to="/new-patient-assessment" className="action-btn primary">
               <div className="btn-icon">➕</div>
               <div className="btn-content">
                 <h3>New Patient Assessment</h3>

@@ -128,15 +128,6 @@ const AuditLogs = () => {
                     {log.riskClassification}
                   </span>
                 </div>
-                <div className="table-cell">
-                  <button
-                    onClick={() => handleViewDetails(log.labId)}
-                    className="action-btn view-btn"
-                    title="View Lab Details"
-                  >
-                    �️
-                  </button>
-                </div>
               </div>
             ))}
           </div>
