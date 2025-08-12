@@ -1,3 +1,213 @@
+.new-patient-assessment {
+  background: #f8f9fa;
+  min-height: 100vh;
+}
+
+.assessment-container {
+  max-width: 700px;
+  margin: 2rem auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  padding: 1.5rem 2.5rem 2.5rem 2.5rem;
+}
+
+.dashboard-back-btn {
+  background: #e9ecef;
+  border: none;
+  color: #333;
+  font-size: 1.1rem;
+  padding: 0.5rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  margin: 0 0 1.2rem 0;
+  display: inline-block;
+  transition: background 0.2s;
+  vertical-align: top;
+}
+
+
+.dashboard-back-btn:hover {
+  background: #d1d5db;
+}
+
+.form-next-btn, .form-back-btn {
+  background: #3182ce;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5em 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  transition: background 0.2s;
+  min-width: 50px;
+  min-height: 50px;
+}
+.form-next-btn:hover, .form-back-btn:hover {
+  background: #2563eb;
+}
+.form-next-btn {
+  background: #3182ce;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.6rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  transition: background 0.2s;
+  min-width: 110px;
+}
+.form-next-btn:hover {
+  background: #2563eb;
+}
+
+.form-back-btn {
+  background: #e2e8f0;
+  color: #333;
+  border: none;
+  border-radius: 5px;
+  padding: 0.4rem 1.1rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  transition: background 0.2s;
+  min-width: 80px;
+}
+.form-back-btn:hover {
+  background: #cbd5e1;
+}
+h2 {
+  text-align: center;
+  color: #2d3748;
+  font-weight: 600;
+  margin-bottom: 2rem;
+}
+
+
+.assessment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-step {
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 1.5rem 1rem 1rem 1rem;
+  margin-bottom: 0.5rem;
+  background: #f9fafb;
+}
+
+.form-step legend {
+  font-weight: 500;
+  color: #4a5568;
+  padding: 0 0.5rem;
+}
+
+.form-step {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem 2rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.5rem;
+}
+
+.form-group label {
+  font-size: 1rem;
+  color: #374151;
+  margin-bottom: 0.3rem;
+}
+
+.form-group input,
+.form-group select {
+  padding: 0.5rem 0.7rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 5px;
+  font-size: 1rem;
+  background: #fff;
+}
+
+
+.form-step {
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 1.5rem 1rem 1rem 1rem;
+  margin-bottom: 0.5rem;
+  background: #f9fafb;
+}
+
+.form-step legend {
+  font-weight: 500;
+  color: #4a5568;
+  padding: 0 0.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  font-size: 1rem;
+  color: #374151;
+  margin-bottom: 0.3rem;
+}
+
+.form-group input,
+.form-group select {
+  padding: 0.5rem 0.7rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 5px;
+  font-size: 1rem;
+  background: #fff;
+}
+
+ .next-btn, .submit-btn, .back-btn{
+  background: #3182ce;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-left: auto;
+  margin-right: 0;
+  transition: background 0.2s;
+}
+.next-btn:hover, .submit-btn:hover {
+  background: #2563eb;
+}
+
+.error-message {
+  color: #e53e3e;
+  background: #fff5f5;
+  border: 1px solid #feb2b2;
+  border-radius: 6px;
+  padding: 0.7rem 1rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.model-result {
+  background: #f1f5f9;
+  border-radius: 8px;
+  color: #2d3748;
+  font-size: 1.05rem;
+}
 /* --- New Patient Assessment Modern Styles --- */
 .new-patient-assessment {
   min-height: calc(100vh - 70px);
@@ -6,21 +216,21 @@
   align-items: center;
   justify-content: center;
   font-family: 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
-  padding-top: calc(70px + 2rem);
-  padding-bottom: 2rem;
+  padding-top: calc(60px + 1.5rem);
+  padding-bottom: 0rem;
 }
 
 .assessment-container {
   background: #fff;
   border-radius: 16px;
   box-shadow: 0 8px 32px rgba(33, 150, 243, 0.10);
-  padding: 2.5rem 2.5rem 2rem 2.5rem;
+  padding: 0rem 2rem 2rem 2rem;
   max-width: 600px;
   width: 100%;
 }
 
 .assessment-form {
-  margin-top: 1.5rem;
+  margin-top: 0.5rem;
 }
 
 .form-grid {
