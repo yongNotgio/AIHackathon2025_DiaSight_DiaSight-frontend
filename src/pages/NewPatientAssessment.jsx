@@ -31,6 +31,7 @@ const NewPatientAssessment = () => {
   const [form, setForm] = useState(initialLabState);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [modelResult, setModelResult] = useState(null);
 
   const handleChange = (e) => {
     setForm({
@@ -43,6 +44,7 @@ const NewPatientAssessment = () => {
     e.preventDefault();
     setLoading(true);
     setError('');
+    setModelResult(null);
     // Get doctor id from localStorage
     const doctor = JSON.parse(localStorage.getItem('currentDoctor'));
     // Cast all number fields to numbers, leave empty as null
@@ -52,13 +54,45 @@ const NewPatientAssessment = () => {
     payload.created_by = doctor?.id || null;
     payload.lab_id = uuidv4();
     const { error: supaError } = await supabase.from('labs').insert([payload]);
-    setLoading(false);
     if (supaError) {
+      setLoading(false);
       setError(supaError.message || 'Failed to submit assessment.');
-    } else {
-      alert('Patient assessment submitted successfully!');
-      navigate('/dashboard');
+      return;
     }
+    // Prepare JSON for ML model
+    const modelInput = {
+      age: Number(form.age),
+      sex: Number(form.sex),
+      sbp: Number(form.sbp),
+      dbp: Number(form.dbp),
+      hbp: Number(form.hbp),
+      duration: Number(form.duration),
+      hb1ac: Number(form.hba1c), // <-- fix key for backend
+      ldl: Number(form.ldl),
+      hdl: Number(form.hdl),
+      chol: Number(form.cholesterol),
+      urea: Number(form.urea),
+      bun: Number(form.bun),
+      uric: Number(form.uric),
+      egfr: Number(form.egfr),
+      trig: Number(form.triglycerides),
+      ucr: Number(form.ucr),
+      alt: Number(form.alt),
+      ast: Number(form.ast)
+    };
+    try {
+      const response = await fetch('https://diasight-deployment.onrender.com/predict', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(modelInput)
+      });
+      if (!response.ok) throw new Error('Model API error');
+      const result = await response.json();
+      setModelResult(result);
+    } catch (err) {
+      setError('Failed to get prediction from model.');
+    }
+    setLoading(false);
   };
 
   return (
@@ -109,6 +143,16 @@ const NewPatientAssessment = () => {
           {error && <div className="error-message">{error}</div>}
           <button type="submit" className="submit-btn" disabled={loading}>{loading ? 'Submitting...' : 'Submit Assessment'}</button>
         </form>
+        {modelResult && (
+          <div className="model-result" style={{marginTop: '2rem', padding: '1rem', border: '1px solid #ccc', borderRadius: 8}}>
+            <h3>Model Prediction Result</h3>
+            <div><b>Prediction:</b> {modelResult.prediction}</div>
+            <div><b>Class Name:</b> {modelResult.class_name}</div>
+            <div><b>Probabilities:</b> {Array.isArray(modelResult.probabilities) ? modelResult.probabilities.join(', ') : ''}</div>
+            <div><b>Confidence:</b> {modelResult.confidence}</div>
+            <div><b>Risk Score:</b> {modelResult.risk_score}</div>
+          </div>
+        )}
       </div>
     </div>
   );
