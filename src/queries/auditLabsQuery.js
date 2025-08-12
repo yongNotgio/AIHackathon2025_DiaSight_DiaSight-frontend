@@ -2,11 +2,16 @@ import { supabase } from '../supabaseClient';
 
 export const fetchAuditLogs = async () => {
   try {
-    // Query audit logs with lab data joined
+    // Query audit logs with lab data and doctor data joined
     const { data, error } = await supabase
       .from('audit_logs')
       .select(`
         *,
+        doctors:doctor_id (
+          id,
+          first_name,
+          last_name
+        ),
         labs:lab_id (
           lab_id,
           age,
@@ -39,9 +44,18 @@ export const fetchAuditLogs = async () => {
     // Transform the data for display
     const transformedData = data.map(log => ({
       auditId: log.id || log.audit_id,
-      dateCreated: new Date(log.created_at).toLocaleDateString(),
+      dateCreated: new Date(log.created_at).toLocaleString(undefined, {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true
+      }),
       doctorId: log.doctor_id,
-      doctorName: `Doctor ${log.doctor_id}`, // Simple display since no join
+      doctorName: log.doctors 
+        ? `${log.doctors.first_name} ${log.doctors.last_name}`.trim()
+        : `Doctor ${log.doctor_id}`, // Fallback if doctor data not found
       labId: log.lab_id,
       // Include all lab data
       labData: log.labs || {},

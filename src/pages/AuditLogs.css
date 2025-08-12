@@ -519,6 +519,49 @@
   text-align: center;
 }
 
+/* Wide table styles for separate columns */
+.wide-table {
+  overflow-x: auto;
+  min-width: 100%;
+}
+
+.wide-table .table-header,
+.wide-table .table-row {
+  display: grid;
+  grid-template-columns: 
+    140px    /* Date */
+    150px    /* Doctor */
+    60px     /* Age */
+    60px     /* Sex */
+    60px     /* SBP */
+    60px     /* DBP */
+    60px     /* HBP */
+    80px     /* Duration */
+    70px     /* HbA1c */
+    90px     /* Cholesterol */
+    60px     /* LDL */
+    60px     /* HDL */
+    90px     /* Triglycerides */
+    60px     /* Urea */
+    60px     /* BUN */
+    60px     /* Uric */
+    70px     /* eGFR */
+    60px     /* UCR */
+    60px     /* ALT */
+    60px     /* AST */
+    120px;   /* Risk */
+  gap: 0.5rem;
+  min-width: 1420px;
+}
+
+.wide-table .table-cell {
+  padding: 0.75rem 0.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 0.85rem;
+}
+
 /* Responsive adjustments for lab inputs */
 @media (max-width: 768px) {
   .lab-inputs-header,
