@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
+import Header from '../components/Header';
 import './Dashboard.css';
 
 const Dashboard = () => {
@@ -64,12 +65,6 @@ const Dashboard = () => {
   };
 
   const [doctorName, setDoctorName] = useState('');
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    localStorage.removeItem('currentDoctor');
-    navigate('/', { replace: true });
-  };
   
   useEffect(() => {
     // Fetch doctor name from localStorage
@@ -85,18 +80,13 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard">
+      <Header />
       <div className="dashboard-container">
         <div className="dashboard-header">
           <div className="header-content">
             <div className="header-left">
               <h1>Dashboard</h1>
               <p>Welcome back{doctorName ? `, Dr. ${doctorName}` : ''}. Here's your lab overview for today.</p>
-            </div>
-            <div className="header-right">
-              <button onClick={handleLogout} className="logout-btn">
-                <span className="logout-icon">🚪</span>
-                Logout
-              </button>
             </div>
           </div>
         </div>
@@ -112,7 +102,7 @@ const Dashboard = () => {
           </div>
           
           <div className="stat-card">
-            <div className="stat-icon">�</div>
+            <div className="stat-icon">🏥</div>
             <div className="stat-content">
               <h3>{stats.todaysLabs}</h3>
               <p>Today's Labs</p>

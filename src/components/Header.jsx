@@ -1,18 +1,32 @@
-// This component is no longer used and can be deleted.
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import logo1 from '../assets/images/logo1.png';
+import diasight from '../assets/images/diasight.png';
 import './Header.css';
 
 const Header = () => {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const [doctorName, setDoctorName] = useState('');
+  const [doctorSpecialization, setDoctorSpecialization] = useState('');
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Fetch doctor info from localStorage
+    const doc = localStorage.getItem('currentDoctor');
+    if (doc) {
+      const doctorData = JSON.parse(doc);
+      setDoctorName(`Dr. ${doctorData.first_name} ${doctorData.last_name}`);
+      setDoctorSpecialization(doctorData.specialization || 'General Practitioner');
+    }
+  }, []);
 
   const toggleProfileMenu = () => {
     setShowProfileMenu(!showProfileMenu);
   };
 
   const handleLogout = () => {
-    // Handle logout logic here
-    window.location.href = '/login';
+    localStorage.removeItem('currentDoctor');
+    navigate('/', { replace: true });
   };
 
   return (
@@ -20,15 +34,13 @@ const Header = () => {
       <div className="header-container">
         <div className="header-left">
           <Link to="/dashboard" className="logo">
-            <h1>DiaSight</h1>
+            <img src={logo1} alt="DiaSight Logo" className="logo-icon" />
+            <img src={diasight} alt="DiaSight" className="logo-text" />
           </Link>
         </div>
 
         <nav className="header-nav">
           <div className="nav-links">
-            <Link to="/dashboard" className="nav-link">Dashboard</Link>
-            <Link to="/new-patient" className="nav-link">New Patient</Link>
-            <Link to="/audit-logs" className="nav-link">Audit Logs</Link>
           </div>
         </nav>
 
@@ -42,7 +54,7 @@ const Header = () => {
               <div className="profile-avatar">
                 <span>DR</span>
               </div>
-              <span className="profile-name">Dr. Smith</span>
+              <span className="profile-name">{doctorName || 'Dr. User'}</span>
               <span className="dropdown-arrow">▼</span>
             </button>
 
@@ -50,22 +62,14 @@ const Header = () => {
               <div className="profile-dropdown">
                 <div className="dropdown-header">
                   <div className="user-info">
-                    <strong>Dr. Smith</strong>
-                    <span>smith@diasight.com</span>
+                    <strong>{doctorName || 'Dr. User'}</strong>
+                    <span>{doctorSpecialization}</span>
                   </div>
                 </div>
                 <div className="dropdown-menu">
-                  <Link to="/profile" className="dropdown-item">
+                  <Link to="/profile-settings" className="dropdown-item">
                     <span className="icon">👤</span>
                     Edit Profile
-                  </Link>
-                  <Link to="/profile" className="dropdown-item">
-                    <span className="icon">🔒</span>
-                    Change Password
-                  </Link>
-                  <Link to="/profile" className="dropdown-item">
-                    <span className="icon">🔔</span>
-                    Notifications Preferences
                   </Link>
                   <div className="dropdown-divider"></div>
                   <button onClick={handleLogout} className="dropdown-item logout-item">
