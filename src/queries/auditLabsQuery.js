@@ -2,10 +2,34 @@ import { supabase } from '../supabaseClient';
 
 export const fetchAuditLogs = async () => {
   try {
-    // Query all contents from the audit_logs table
+    // Query audit logs with lab data joined
     const { data, error } = await supabase
       .from('audit_logs')
-      .select('*')
+      .select(`
+        *,
+        labs:lab_id (
+          lab_id,
+          age,
+          sex,
+          sbp,
+          dbp,
+          hbp,
+          duration,
+          hba1c,
+          ldl,
+          hdl,
+          cholesterol,
+          urea,
+          bun,
+          uric,
+          egfr,
+          triglycerides,
+          ucr,
+          alt,
+          ast,
+          created_by
+        )
+      `)
       .order('created_at', { ascending: false });
 
     if (error) {
@@ -19,9 +43,11 @@ export const fetchAuditLogs = async () => {
       doctorId: log.doctor_id,
       doctorName: `Doctor ${log.doctor_id}`, // Simple display since no join
       labId: log.lab_id,
+      // Include all lab data
+      labData: log.labs || {},
+      // Include all lab inputs from the jsonb field as backup
       allLabInputs: log.all_lab_inputs,
-      riskClassification: log.risk_class || log.risk_classification || 'Pending Classification',
-      actionType: log.action_type || 'CREATE'
+      riskClassification: log.risk_class || log.risk_classification || 'Pending Classification'
     }));
 
     return { data: transformedData, error: null };
