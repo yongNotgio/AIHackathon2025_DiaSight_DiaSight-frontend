@@ -30,12 +30,23 @@ const AuditLogs = () => {
 
   // Filter audit logs based on search term
   useEffect(() => {
-    const filtered = auditLogs.filter(log =>
-      log.doctorName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      log.labId.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      log.riskClassification.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      log.auditId.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    const filtered = auditLogs.filter(log => {
+      const searchLower = searchTerm.toLowerCase();
+      
+      // Search in basic fields
+      const basicMatch = 
+        log.doctorName.toLowerCase().includes(searchLower) ||
+        log.riskClassification.toLowerCase().includes(searchLower) ||
+        log.auditId.toLowerCase().includes(searchLower);
+      
+      // Search in lab data
+      const labData = log.labData || log.allLabInputs || {};
+      const labMatch = Object.values(labData).some(value => 
+        value && value.toString().toLowerCase().includes(searchLower)
+      );
+      
+      return basicMatch || labMatch;
+    });
     setFilteredData(filtered);
   }, [searchTerm, auditLogs]);
 
@@ -50,6 +61,55 @@ const AuditLogs = () => {
       case 'high risk': return 'status-completed';
       default: return 'status-default';
     }
+  };
+
+  // Function to format lab inputs for display
+  const formatLabInputs = (allLabInputs, labData) => {
+    // Use labData if available, fallback to allLabInputs
+    const labInfo = labData && Object.keys(labData).length > 0 ? labData : allLabInputs;
+    
+    if (!labInfo || Object.keys(labInfo).length === 0) {
+      return <span className="no-data">No lab data available</span>;
+    }
+
+    // Define the order and labels for lab values
+    const labFields = [
+      { key: 'age', label: 'Age' },
+      { key: 'sex', label: 'Sex' },
+      { key: 'sbp', label: 'SBP' },
+      { key: 'dbp', label: 'DBP' },
+      { key: 'hbp', label: 'HBP' },
+      { key: 'duration', label: 'Duration' },
+      { key: 'hba1c', label: 'HbA1c' },
+      { key: 'cholesterol', label: 'Cholesterol' },
+      { key: 'ldl', label: 'LDL' },
+      { key: 'hdl', label: 'HDL' },
+      { key: 'triglycerides', label: 'Triglycerides' },
+      { key: 'urea', label: 'Urea' },
+      { key: 'bun', label: 'BUN' },
+      { key: 'uric', label: 'Uric Acid' },
+      { key: 'egfr', label: 'eGFR' },
+      { key: 'ucr', label: 'UCR' },
+      { key: 'alt', label: 'ALT' },
+      { key: 'ast', label: 'AST' }
+    ];
+
+    return (
+      <div className="lab-inputs-display">
+        {labFields.map(({ key, label }) => {
+          const value = labInfo[key];
+          if (value !== undefined && value !== null && value !== '') {
+            return (
+              <div key={key} className="lab-input-item">
+                <span className="lab-label">{label}:</span>
+                <span className="lab-value">{value}</span>
+              </div>
+            );
+          }
+          return null;
+        })}
+      </div>
+    );
   };
 
   if (loading) {
@@ -112,9 +172,8 @@ const AuditLogs = () => {
               <div className="table-cell">Audit ID</div>
               <div className="table-cell">Date Created</div>
               <div className="table-cell">Doctor</div>
-              <div className="table-cell">Lab ID</div>
+              <div className="table-cell lab-inputs-header">Lab Inputs</div>
               <div className="table-cell">Risk Classification</div>
-              <div className="table-cell">Actions</div>
             </div>
             
             {filteredData.map((log) => (
@@ -122,7 +181,9 @@ const AuditLogs = () => {
                 <div className="table-cell font-medium">{log.auditId}</div>
                 <div className="table-cell">{log.dateCreated}</div>
                 <div className="table-cell font-medium">{log.doctorName}</div>
-                <div className="table-cell">{log.labId}</div>
+                <div className="table-cell lab-inputs-cell">
+                  {formatLabInputs(log.allLabInputs, log.labData)}
+                </div>
                 <div className="table-cell">
                   <span className={`status ${getRiskClass(log.riskClassification)}`}>
                     {log.riskClassification}

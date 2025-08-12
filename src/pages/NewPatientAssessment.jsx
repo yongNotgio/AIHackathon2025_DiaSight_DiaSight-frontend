@@ -7,6 +7,7 @@ import './NewPatientAssessment.css';
 const initialLabState = {
   age: '',
   sex: '',
+  sbp: '',
   dbp: '',
   hbp: '',
   duration: '',
@@ -87,6 +88,7 @@ const NewPatientAssessment = () => {
                 <option value="2">Female</option>
               </select>
             </div>
+            <div className="form-group"><label>SBP</label><input type="number" name="sbp" value={form.sbp} onChange={handleChange} /></div>
             <div className="form-group"><label>DBP</label><input type="number" name="dbp" value={form.dbp} onChange={handleChange} /></div>
             <div className="form-group"><label>HBP</label><input type="number" name="hbp" value={form.hbp} onChange={handleChange} /></div>
             <div className="form-group"><label>Duration</label><input type="number" name="duration" value={form.duration} onChange={handleChange} /></div>
