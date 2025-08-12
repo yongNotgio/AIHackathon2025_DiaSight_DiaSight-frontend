@@ -122,7 +122,16 @@ const NewPatientAssessment = () => {
             </div>
             <div className="form-group"><label>SBP</label><input type="number" name="sbp" value={form.sbp} onChange={handleChange} /></div>
             <div className="form-group"><label>DBP</label><input type="number" name="dbp" value={form.dbp} onChange={handleChange} /></div>
-            <div className="form-group"><label>HBP</label><input type="number" name="hbp" value={form.hbp} onChange={handleChange} /></div>
+            <div className="form-group">
+              <label>HBP *</label>
+              <select name="hbp" value={form.hbp} onChange={handleChange} required>
+                <option value="">Select</option>
+                <option value="1">No</option>
+                <option value="2">Yes</option>
+              </select>
+              <div style={{ fontSize: '0.9em', color: '#555', marginTop: 2 }}>
+              </div>
+            </div>
             <div className="form-group"><label>Duration</label><input type="number" name="duration" value={form.duration} onChange={handleChange} /></div>
             <div className="form-group"><label>HbA1c</label><input type="number" name="hba1c" value={form.hba1c} onChange={handleChange} /></div>
             <div className="form-group"><label>LDL</label><input type="number" name="ldl" value={form.ldl} onChange={handleChange} /></div>
@@ -145,7 +154,7 @@ const NewPatientAssessment = () => {
             <h3>Model Prediction Result</h3>
             <div><b>Prediction:</b> {modelResult.prediction}</div>
             <div><b>Class Names:</b> {modelResult.class_names ? modelResult.class_names.join(', ') : ''}</div>
-<div><b>Probabilities:</b> {modelResult.probabilities ? JSON.stringify(modelResult.probabilities) : ''}</div>
+            <div><b>Probabilities:</b> {modelResult.probabilities ? JSON.stringify(modelResult.probabilities) : ''}</div>
             <div><b>Confidence:</b> {modelResult.confidence}</div>
             <div><b>Risk Score:</b> {modelResult.risk_score}</div>
           </div>
