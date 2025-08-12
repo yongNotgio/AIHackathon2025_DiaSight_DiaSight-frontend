@@ -13,7 +13,7 @@
 **Steps:**
 ```bash
 # 1. Get the code
-#    (Diasight-Deployment folder from your team/repo)
+#    (Diasight-Deployment folder from https://github.com/yongNotgio/DiaSight-Deployment)
 
 # 2. Go to folder
 cd Diasight-Deployment
