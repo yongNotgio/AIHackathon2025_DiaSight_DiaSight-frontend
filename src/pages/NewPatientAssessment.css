@@ -1,11 +1,13 @@
 /* --- New Patient Assessment Modern Styles --- */
 .new-patient-assessment {
-  min-height: 100vh;
+  min-height: calc(100vh - 70px);
   background: #f4f8fc;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  padding-top: calc(70px + 2rem);
+  padding-bottom: 2rem;
 }
 
 .assessment-container {
@@ -30,6 +32,7 @@
 @media (max-width: 700px) {
   .new-patient-assessment {
     padding: 0.5rem;
+    padding-top: calc(70px + 1rem);
     align-items: flex-start;
   }
   
@@ -91,28 +94,10 @@
   border: 1.5px solid #2196F3;
 }
 
-.back-btn {
-  background: #f3f3f3;
-  color: #1976D2;
-  border: 1.5px solid #e3e8f0;
-  border-radius: 6px;
-  padding: 0.5rem 1.2rem;
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background 0.2s, border 0.2s;
-  margin-bottom: 0.5rem;
-}
-.back-btn:hover {
-  background: #e0e0e0;
-  border-color: #2196F3;
-  color: #1976D2;
-}
-
 .submit-btn {
   margin-top: 1.5rem;
   width: 100%;
-  background: #2196F3;
+  background-color: #2196F3;
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -142,40 +127,31 @@
   font-size: 1rem;
   text-align: center;
 }
+
 /* Back Button Styles */
 .back-btn {
-  background: #f3f3f3;
-  color: #333;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  padding: 0.5rem 1.2rem;
-  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: black;
+  border: none;
+  background-color: #1976D2;
+  font-size: 0.95rem;
   font-weight: 500;
   cursor: pointer;
-  transition: background 0.2s, border 0.2s;
-  margin-bottom: 0.5rem;
+  border-radius: 30px;
+  width: 50px;
+  height: 30px;
 }
+
 .back-btn:hover {
-  background: #e0e0e0;
+  color: white;
   border-color: #2196F3;
-  color: #1976D2;
 }
-/* Submit Button Styles */
-.submit-btn {
-  margin-top: 1.5rem;
-  width: 100%;
-  background: #2196F3;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  padding: 0.9rem 0;
-  font-size: 1.1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-.submit-btn:hover:not(:disabled) {
-  background: #1976D2;
+
+.back-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 /* ...existing code... */

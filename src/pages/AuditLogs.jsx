@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './AuditLogs.css';
 import { fetchAuditLogs } from '../queries/auditLabsQuery';
+import Header from '../components/Header';
 
 const AuditLogs = () => {
   const navigate = useNavigate();
@@ -15,12 +16,29 @@ const AuditLogs = () => {
   useEffect(() => {
     const loadAuditLogs = async () => {
       setLoading(true);
+      
+      // Get current doctor from localStorage
+      const currentDoctorData = localStorage.getItem('currentDoctor');
+      if (!currentDoctorData) {
+        setError('No doctor logged in');
+        setLoading(false);
+        return;
+      }
+      
+      const currentDoctor = JSON.parse(currentDoctorData);
+      const currentDoctorId = currentDoctor.id;
+      
       const { data, error } = await fetchAuditLogs();
       
       if (error) {
         setError(error);
       } else {
-        setAuditLogs(data);
+        // Filter audit logs to only show entries for the current doctor
+        const doctorLogs = data.filter(log => 
+          log.doctorId === currentDoctorId || 
+          log.doctor_id === currentDoctorId
+        );
+        setAuditLogs(doctorLogs);
       }
       setLoading(false);
     };
@@ -95,6 +113,7 @@ const AuditLogs = () => {
 
   return (
     <div className="audit-logs">
+      <Header />
       <div className="audit-logs-container">
         <div className="audit-logs-header">
           <button 
@@ -102,10 +121,10 @@ const AuditLogs = () => {
             onClick={() => navigate('/dashboard')}
             title="Back to Dashboard"
           >
-            ← Back to Dashboard
+            ←
           </button>
-          <h1>Audit Logs</h1>
-          <p>Complete audit trail of all lab entries showing doctor details, lab data, and risk classifications.</p>
+          <h1>My Audit Logs</h1>
+          <p>Complete audit trail of your lab entries showing patient data and risk classifications.</p>
         </div>
 
         {/* Search Bar */}
@@ -121,17 +140,16 @@ const AuditLogs = () => {
             <span className="search-icon">🔍</span>
           </div>
           <div className="results-count">
-            Showing {filteredData.length} audit entries
+            Showing {filteredData.length} of your audit entries
           </div>
         </div>
 
         {/* Audit Logs Table */}
         <div className="data-table-section">
-          <h2>Lab Entry Audit Trail</h2>
+          <h2>My Lab Entry Audit Trail</h2>
           <div className="data-table wide-table">
             <div className="table-header">
               <div className="table-cell">Date</div>
-              <div className="table-cell">Doctor</div>
               <div className="table-cell">Age</div>
               <div className="table-cell">Sex</div>
               <div className="table-cell">SBP</div>
@@ -156,7 +174,6 @@ const AuditLogs = () => {
             {filteredData.map((log) => (
               <div key={log.auditId} className="table-row">
                 <div className="table-cell">{log.dateCreated}</div>
-                <div className="table-cell font-medium">{log.doctorName}</div>
                 <div className="table-cell">{getLabValue(log.allLabInputs, log.labData, 'age')}</div>
                 <div className="table-cell">{getLabValue(log.allLabInputs, log.labData, 'sex')}</div>
                 <div className="table-cell">{getLabValue(log.allLabInputs, log.labData, 'sbp')}</div>
@@ -186,7 +203,7 @@ const AuditLogs = () => {
           
           {filteredData.length === 0 && !loading && (
             <div className="no-results">
-              <p>No audit logs found matching your search.</p>
+              <p>No audit logs found matching your search in your records.</p>
             </div>
           )}
         </div>

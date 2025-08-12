@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
+import Header from '../components/Header';
 import './NewPatientAssessment.css';
 
 const initialLabState = {
@@ -62,16 +63,16 @@ const NewPatientAssessment = () => {
 
   return (
     <div className="new-patient-assessment">
+      <Header />
       <div className="assessment-container">
         <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1.5rem' }}>
-          <button
-            type="button"
+          <a
             className="back-btn"
             onClick={() => navigate('/dashboard')}
             style={{ marginRight: 16 }}
           >
-            ← Back
-          </button>
+            ←
+          </a>
           <h2 style={{ margin: 0 }}>New Patient Assessment (Labs)</h2>
         </div>
         <form className="assessment-form" onSubmit={handleSubmit}>
