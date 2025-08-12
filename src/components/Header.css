@@ -194,15 +194,20 @@
 /* Responsive Design */
 @media (max-width: 768px) {
   .header-container {
-    padding: 0 15px;
+    padding: 0 10px;
+    height: 60px;
+  }
+  
+  .header-left .logo h1 {
+    font-size: 1.5rem;
   }
   
   .nav-links {
-    gap: 1rem;
+    gap: 0.75rem;
   }
   
   .nav-link {
-    padding: 0.4rem 0.8rem;
+    padding: 0.4rem 0.6rem;
     font-size: 0.9rem;
   }
   
@@ -210,9 +215,32 @@
     display: none;
   }
   
+  .profile-avatar {
+    width: 32px;
+    height: 32px;
+    font-size: 0.75rem;
+  }
+  
   .profile-dropdown {
-    min-width: 200px;
-    right: -10px;
+    min-width: 220px;
+    right: -5px;
+  }
+  
+  .dropdown-header {
+    padding: 0.75rem;
+  }
+  
+  .user-info strong {
+    font-size: 0.9rem;
+  }
+  
+  .user-info span {
+    font-size: 0.8rem;
+  }
+  
+  .dropdown-item {
+    padding: 0.6rem 0.75rem;
+    font-size: 0.85rem;
   }
 }
 
@@ -223,5 +251,66 @@
   
   .header-container {
     justify-content: space-between;
+    height: 55px;
+  }
+  
+  .header-left .logo h1 {
+    font-size: 1.3rem;
+  }
+  
+  .profile-avatar {
+    width: 30px;
+    height: 30px;
+    font-size: 0.7rem;
+  }
+  
+  .profile-dropdown {
+    min-width: 200px;
+    right: -10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-container {
+    padding: 0 5px;
+    height: 50px;
+  }
+  
+  .header-left .logo h1 {
+    font-size: 1.2rem;
+  }
+  
+  .profile-avatar {
+    width: 28px;
+    height: 28px;
+    font-size: 0.65rem;
+  }
+  
+  .profile-dropdown {
+    min-width: 180px;
+    right: -15px;
+    margin-top: 0.25rem;
+  }
+  
+  .dropdown-header {
+    padding: 0.5rem;
+  }
+  
+  .user-info strong {
+    font-size: 0.85rem;
+  }
+  
+  .user-info span {
+    font-size: 0.75rem;
+  }
+  
+  .dropdown-item {
+    padding: 0.5rem;
+    font-size: 0.8rem;
+  }
+  
+  .nav-icon {
+    font-size: 1rem;
+    width: 16px;
   }
 }

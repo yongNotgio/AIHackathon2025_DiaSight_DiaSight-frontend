@@ -86,13 +86,6 @@ const LoginPage = () => {
             />
           </div>
 
-          <div className="form-options">
-            <label className="remember-me">
-              <input type="checkbox" />
-              <span>Remember Me</span>
-            </label>
-          </div>
-
           {error && <div className="error-message">{error}</div>}
 
           <button type="submit" className="login-btn" disabled={loading}>

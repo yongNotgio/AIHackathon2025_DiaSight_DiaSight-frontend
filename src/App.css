@@ -17,6 +17,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: #f8f9fa;
+  /* Touch optimization */
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  touch-action: manipulation;
 }
 
 /* Utility Classes */
@@ -54,6 +57,11 @@ body {
   cursor: pointer;
   transition: all 0.3s ease;
   font-family: inherit;
+  /* Touch optimization */
+  min-height: 44px;
+  min-width: 44px;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 .btn-primary {
@@ -164,7 +172,7 @@ body {
 /* Responsive Design */
 @media (max-width: 768px) {
   .container {
-    padding: 0 15px;
+    padding: 0 10px;
   }
   
   .btn {
@@ -174,11 +182,24 @@ body {
   
   .card-header,
   .card-body {
-    padding: 1.5rem;
+    padding: 1.25rem;
+  }
+  
+  .form-control {
+    padding: 0.6rem;
+    font-size: 0.95rem;
+  }
+  
+  .form-group label {
+    font-size: 0.85rem;
   }
 }
 
 @media (max-width: 480px) {
+  .container {
+    padding: 0 5px;
+  }
+  
   .card-header,
   .card-body {
     padding: 1rem;
@@ -187,5 +208,18 @@ body {
   .btn {
     font-size: 0.85rem;
     padding: 0.5rem 1rem;
+  }
+  
+  .form-control {
+    padding: 0.55rem;
+    font-size: 0.9rem;
+  }
+  
+  .form-group label {
+    font-size: 0.8rem;
+  }
+  
+  .card {
+    border-radius: 8px;
   }
 }

@@ -6,7 +6,7 @@
 }
 
 .audit-logs-container {
-  max-width: 1400px;
+  max-width: 95vw;
   margin: 0 auto;
   padding: 0 20px;
 }
@@ -366,16 +366,36 @@
   }
   
   .audit-logs-container {
-    padding: 0 15px;
+    padding: 0 10px;
+  }
+  
+  .audit-logs-header {
+    margin-bottom: 1.5rem;
+    position: static;
+    text-align: left;
+  }
+  
+  .back-button {
+    position: static;
+    transform: none;
+    margin-bottom: 1rem;
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
   }
   
   .audit-logs-header h1 {
-    font-size: 2rem;
+    font-size: 1.8rem;
+    margin-bottom: 0.25rem;
+  }
+  
+  .audit-logs-header p {
+    font-size: 1rem;
   }
   
   .search-section {
     flex-direction: column;
     align-items: stretch;
+    gap: 1rem;
   }
   
   .search-bar {
@@ -389,15 +409,15 @@
   }
   
   .data-table-section h2 {
-    padding: 1rem 1.5rem;
+    padding: 1rem 1rem;
     font-size: 1.3rem;
   }
   
   .table-header,
   .table-row {
-    grid-template-columns: 80px 120px 60px 90px 90px 90px 120px 80px;
-    padding: 0.5rem 1rem;
-    gap: 0.5rem;
+    grid-template-columns: 70px 100px 50px 80px 80px 80px 100px 70px;
+    padding: 0.75rem 0.5rem;
+    gap: 0.25rem;
     font-size: 0.8rem;
   }
   
@@ -407,42 +427,151 @@
   }
   
   .action-btn {
-    padding: 0.3rem;
-    font-size: 0.9rem;
+    padding: 0.4rem 0.6rem;
+    font-size: 0.8rem;
+  }
+  
+  .wide-table .table-header,
+  .wide-table .table-row {
+    min-width: 900px;
+    grid-template-columns: 
+      100px    /* Date */
+      100px    /* Doctor */
+      40px     /* Age */
+      40px     /* Sex */
+      45px     /* SBP */
+      45px     /* DBP */
+      45px     /* HBP */
+      60px     /* Duration */
+      55px     /* HbA1c */
+      65px     /* Cholesterol */
+      45px     /* LDL */
+      45px     /* HDL */
+      65px     /* Triglycerides */
+      45px     /* Urea */
+      45px     /* BUN */
+      45px     /* Uric */
+      55px     /* eGFR */
+      45px     /* UCR */
+      45px     /* ALT */
+      45px     /* AST */
+      80px;    /* Risk */
+  }
+  
+  .wide-table .table-cell {
+    padding: 0.5rem 0.25rem;
+    font-size: 0.75rem;
   }
 }
 
 @media (max-width: 480px) {
+  .audit-logs {
+    padding: 0.5rem 0;
+  }
+  
+  .audit-logs-container {
+    padding: 0 5px;
+  }
+  
+  .back-button {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+  
   .audit-logs-header h1 {
-    font-size: 1.75rem;
+    font-size: 1.5rem;
   }
   
   .audit-logs-header p {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
   
   .toggle-btn {
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
+  }
+  
+  .search-input {
+    padding: 0.6rem 0.75rem 0.6rem 2.5rem;
     font-size: 0.9rem;
+  }
+  
+  .search-icon {
+    font-size: 1rem;
+    left: 0.75rem;
+  }
+  
+  .data-table-section h2 {
+    padding: 0.75rem 0.5rem;
+    font-size: 1.1rem;
   }
   
   .table-header,
   .table-row {
-    padding: 0.5rem;
-    gap: 0.25rem;
-    font-size: 0.75rem;
+    padding: 0.5rem 0.25rem;
+    gap: 0.1rem;
+    font-size: 0.7rem;
+    grid-template-columns: 50px 80px 40px 60px 60px 60px 80px 50px;
   }
   
   .data-table {
     overflow-x: scroll;
   }
   
+  .action-btn {
+    padding: 0.25rem 0.4rem;
+    font-size: 0.7rem;
+  }
+  
   .summary-stats {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
+    gap: 1rem;
   }
   
   .stat-item {
     padding: 1rem;
+  }
+  
+  .stat-item h3 {
+    font-size: 1rem;
+  }
+  
+  .stat-item p {
+    font-size: 1.3rem;
+  }
+  
+  .wide-table .table-header,
+  .wide-table .table-row {
+    min-width: 700px;
+    grid-template-columns: 
+      80px     /* Date */
+      80px     /* Doctor */
+      35px     /* Age */
+      35px     /* Sex */
+      40px     /* SBP */
+      40px     /* DBP */
+      40px     /* HBP */
+      50px     /* Duration */
+      45px     /* HbA1c */
+      55px     /* Cholesterol */
+      40px     /* LDL */
+      40px     /* HDL */
+      55px     /* Triglycerides */
+      40px     /* Urea */
+      40px     /* BUN */
+      40px     /* Uric */
+      45px     /* eGFR */
+      40px     /* UCR */
+      40px     /* ALT */
+      40px     /* AST */
+      70px;    /* Risk */
+  }
+  
+  .wide-table .table-cell {
+    padding: 0.4rem 0.15rem;
+    font-size: 0.7rem;
   }
 }
 
@@ -523,43 +652,69 @@
 .wide-table {
   overflow-x: auto;
   min-width: 100%;
+  border-radius: 8px;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e0 #f7fafc;
+}
+
+.wide-table::-webkit-scrollbar {
+  height: 8px;
+}
+
+.wide-table::-webkit-scrollbar-track {
+  background: #f7fafc;
+  border-radius: 4px;
+}
+
+.wide-table::-webkit-scrollbar-thumb {
+  background: #cbd5e0;
+  border-radius: 4px;
+}
+
+.wide-table::-webkit-scrollbar-thumb:hover {
+  background: #a0aec0;
 }
 
 .wide-table .table-header,
 .wide-table .table-row {
   display: grid;
   grid-template-columns: 
-    140px    /* Date */
-    150px    /* Doctor */
-    60px     /* Age */
-    60px     /* Sex */
-    60px     /* SBP */
-    60px     /* DBP */
-    60px     /* HBP */
-    80px     /* Duration */
-    70px     /* HbA1c */
-    90px     /* Cholesterol */
-    60px     /* LDL */
-    60px     /* HDL */
-    90px     /* Triglycerides */
-    60px     /* Urea */
-    60px     /* BUN */
-    60px     /* Uric */
-    70px     /* eGFR */
-    60px     /* UCR */
-    60px     /* ALT */
-    60px     /* AST */
-    120px;   /* Risk */
-  gap: 0.5rem;
-  min-width: 1420px;
+    120px    /* Date */
+    130px    /* Doctor */
+    50px     /* Age */
+    50px     /* Sex */
+    55px     /* SBP */
+    55px     /* DBP */
+    55px     /* HBP */
+    70px     /* Duration */
+    65px     /* HbA1c */
+    80px     /* Cholesterol */
+    55px     /* LDL */
+    55px     /* HDL */
+    80px     /* Triglycerides */
+    55px     /* Urea */
+    55px     /* BUN */
+    55px     /* Uric */
+    65px     /* eGFR */
+    55px     /* UCR */
+    55px     /* ALT */
+    55px     /* AST */
+    100px;   /* Risk */
+  gap: 0.4rem;
+  min-width: 1280px;
 }
 
 .wide-table .table-cell {
-  padding: 0.75rem 0.5rem;
+  padding: 0.75rem 0.4rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 0.85rem;
+  border-right: 1px solid #f1f3f4;
+}
+
+.wide-table .table-cell:last-child {
+  border-right: none;
 }
 
 /* Responsive adjustments for lab inputs */
