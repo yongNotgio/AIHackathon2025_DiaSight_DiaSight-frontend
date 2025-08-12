@@ -55,9 +55,40 @@ const NewPatientAssessment = () => {
     setLoading(false);
     if (supaError) {
       setError(supaError.message || 'Failed to submit assessment.');
-    } else {
-      alert('Patient assessment submitted successfully!');
-      navigate('/dashboard');
+      return;
+    }
+    // Prepare JSON for ML model
+    const modelInput = {
+      age: Number(form.age),
+      sex: Number(form.sex),
+      sbp: Number(form.sbp),
+      dbp: Number(form.dbp),
+      hbp: Number(form.hbp),
+      duration: Number(form.duration),
+      hb1ac: Number(form.hba1c), // <-- fix key for backend
+      ldl: Number(form.ldl),
+      hdl: Number(form.hdl),
+      chol: Number(form.cholesterol),
+      urea: Number(form.urea),
+      bun: Number(form.bun),
+      uric: Number(form.uric),
+      egfr: Number(form.egfr),
+      trig: Number(form.triglycerides),
+      ucr: Number(form.ucr),
+      alt: Number(form.alt),
+      ast: Number(form.ast)
+    };
+    try {
+      const response = await fetch('http://localhost:8000/predict', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(modelInput)
+      });
+      if (!response.ok) throw new Error('Model API error');
+      const result = await response.json();
+      setModelResult(result);
+    } catch (err) {
+      setError('Failed to get prediction from model.');
     }
   };
 
@@ -109,6 +140,16 @@ const NewPatientAssessment = () => {
           {error && <div className="error-message">{error}</div>}
           <button type="submit" className="submit-btn" disabled={loading}>{loading ? 'Submitting...' : 'Submit Assessment'}</button>
         </form>
+        {modelResult && (
+          <div className="model-result" style={{marginTop: '2rem', padding: '1rem', border: '1px solid #ccc', borderRadius: 8}}>
+            <h3>Model Prediction Result</h3>
+            <div><b>Prediction:</b> {modelResult.prediction}</div>
+            <div><b>Class Names:</b> {modelResult.class_names ? modelResult.class_names.join(', ') : ''}</div>
+<div><b>Probabilities:</b> {modelResult.probabilities ? JSON.stringify(modelResult.probabilities) : ''}</div>
+            <div><b>Confidence:</b> {modelResult.confidence}</div>
+            <div><b>Risk Score:</b> {modelResult.risk_score}</div>
+          </div>
+        )}
       </div>
     </div>
   );
