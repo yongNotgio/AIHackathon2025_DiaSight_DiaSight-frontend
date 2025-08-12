@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
 import medicalTeamImage from '../assets/images/medical-team.png';
+import logo1 from '../assets/images/logo1.png';
+import diasight from '../assets/images/diasight.png';
 import './LoginPage.css';
 
 const LoginPage = () => {
@@ -47,8 +49,8 @@ const LoginPage = () => {
       <div className="login-form-container">
         <div className="logo-section">
           <div className="logo">
-            <span className="logo-icon">📋</span>
-            <span className="logo-text">DiaSight</span>
+            <img src={logo1} alt="DiaSight Logo" className="logo-icon" />
+            <img src={diasight} alt="DiaSight" className="logo-text" />
           </div>
         </div>
 

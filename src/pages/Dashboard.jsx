@@ -53,13 +53,6 @@ const Dashboard = () => {
     }
   };
 
-  const [recentPatients] = useState([
-    { id: 'P001', name: 'John Smith', age: 45, lastVisit: '2025-01-10', status: 'Active' },
-    { id: 'P002', name: 'Sarah Johnson', age: 38, lastVisit: '2025-01-09', status: 'Pending Review' },
-    { id: 'P003', name: 'Michael Davis', age: 52, lastVisit: '2025-01-08', status: 'Completed' },
-    { id: 'P004', name: 'Emily Wilson', age: 41, lastVisit: '2025-01-07', status: 'Active' },
-    { id: 'P005', name: 'Robert Brown', age: 48, lastVisit: '2025-01-06', status: 'Pending Review' }
-  ]);
 
   const getStatusClass = (status) => {
     switch (status.toLowerCase()) {
@@ -146,43 +139,6 @@ const Dashboard = () => {
                 <p>View all patient records and activities</p>
               </div>
             </Link>
-          </div>
-        </div>
-
-        {/* Recent Patients Table */}
-        <div className="recent-patients">
-          <div className="section-header">
-            <h2>Recent Patients</h2>
-            <Link to="/audit-logs" className="view-all-link">View All</Link>
-          </div>
-          
-          <div className="patients-table">
-            <div className="table-header">
-              <div className="table-cell">Patient ID</div>
-              <div className="table-cell">Name</div>
-              <div className="table-cell">Age</div>
-              <div className="table-cell">Last Visit</div>
-              <div className="table-cell">Status</div>
-              <div className="table-cell">Actions</div>
-            </div>
-            
-            {recentPatients.map((patient) => (
-              <div key={patient.id} className="table-row">
-                <div className="table-cell">{patient.id}</div>
-                <div className="table-cell font-medium">{patient.name}</div>
-                <div className="table-cell">{patient.age}</div>
-                <div className="table-cell">{patient.lastVisit}</div>
-                <div className="table-cell">
-                  <span className={`status ${getStatusClass(patient.status)}`}>
-                    {patient.status}
-                  </span>
-                </div>
-                <div className="table-cell">
-                  <button className="action-icon-btn" title="View Details">👁️</button>
-                  <button className="action-icon-btn" title="Edit">✏️</button>
-                </div>
-              </div>
-            ))}
           </div>
         </div>
       </div>
