@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import logo1 from '../assets/images/logo1.png';
 import diasight from '../assets/images/diasight.png';
 import './Header.css';
@@ -9,6 +9,7 @@ const Header = () => {
   const [doctorName, setDoctorName] = useState('');
   const [doctorSpecialization, setDoctorSpecialization] = useState('');
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     // Fetch doctor info from localStorage
@@ -41,6 +42,18 @@ const Header = () => {
 
         <nav className="header-nav">
           <div className="nav-links">
+            <Link 
+              to="/dashboard" 
+              className={`nav-link ${location.pathname === '/dashboard' ? 'active' : ''}`}
+            >
+              Dashboard
+            </Link>
+            <Link 
+              to="/audit-logs" 
+              className={`nav-link ${location.pathname === '/audit-logs' ? 'active' : ''}`}
+            >
+              Audit Logs
+            </Link>
           </div>
         </nav>
 

@@ -163,7 +163,6 @@ const Dashboard = () => {
     }
   };
 
-
   const getStatusClass = (status) => {
     switch (status.toLowerCase()) {
       case 'active': return 'status-active';
@@ -195,166 +194,178 @@ const Dashboard = () => {
     <div className="dashboard">
       <Header />
       <div className="dashboard-container">
+        {/* Header Section */}
         <div className="dashboard-header">
           <div className="header-content">
             <div className="header-left">
-              <h1>Dashboard</h1>
-              <p>Welcome back{doctorName ? `, Dr. ${doctorName}` : ''}. Here's your lab overview for today.</p>
+              <h1>Overview</h1>
+            </div>
+            <div className="header-actions">
+              <Link to="/new-patient-assessment" className="consultation-btn">
+                New Patient Assessment →
+              </Link>
             </div>
           </div>
         </div>
 
-        {/* Stats Cards */}
-        <div className="stats-grid">
-          <div className="stat-card">
-            <div className="stat-icon">🧪</div>
-            <div className="stat-content">
-              <h3>{stats.totalLabs}</h3>
-              <p>Total Labs</p>
-            </div>
-          </div>
-          
-          <div className="stat-card">
-            <div className="stat-icon">🏥</div>
-            <div className="stat-content">
-              <h3>{stats.todaysLabs}</h3>
-              <p>Today's Labs</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Quick Actions */}
-        <div className="dashboard-actions">
-          <h2>Quick Actions</h2>
-          <div className="action-buttons">
-            <Link to="/new-patient-assessment" className="action-btn primary">
-              <div className="btn-icon">➕</div>
-              <div className="btn-content">
-                <h3>New Patient Assessment</h3>
-                <p>Start a new patient evaluation</p>
+        {/* Main Content Grid */}
+        <div className="main-grid">
+          {/* Left Column */}
+          <div className="left-column">
+            {/* Logo Card */}
+            <div className="logo-card">
+              <div className="logo-content">
+                <div className="logo-section">
+                  <img 
+                    src="/logo.png" 
+                    alt="DiaSight Logo" 
+                    className="logo-image"
+                    onError={(e) => {
+                      e.target.style.display = 'none';
+                      e.target.nextSibling.style.display = 'flex';
+                    }}
+                  />  
+                </div>
+                <div className="diabetic-info">
+                  <div className="diabetic-badge">
+                    <span className="diabetic-icon">👁️</span>
+                    <div>
+                      <Link 
+                        to="/diabetic-retinopathy" 
+                        className="diabetic-link"
+                      >
+                        Diabetic Retinopathy
+                      </Link>
+                      <div className="appointment-time">AI Detection System</div>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </Link>
-            
-            <Link to="/audit-logs" className="action-btn secondary">
-              <div className="btn-icon">📊</div>
-              <div className="btn-content">
-                <h3>Audit Logs</h3>
-                <p>View all patient records and activities</p>
-              </div>
-            </Link>
+            </div>
           </div>
-        </div>
 
-        {/* Charts Section */}
-        <div className="charts-section">
-          <div className="section-header">
-            <h2>Analytics Dashboard - {new Date().getFullYear()}</h2>
-          </div>
-          <div className="charts-container">
-            {/* Monthly Assessments Bar Chart */}
-            <div className="chart-item">
-              <h3>Monthly Assessments</h3>
-              <div className="chart-wrapper">
-                <Bar
-                  data={{
-                    labels: [
-                      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-                      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-                    ],
-                    datasets: [
-                      {
-                        label: 'New Assessments',
-                        data: monthlyData,
-                        backgroundColor: 'rgba(54, 162, 235, 0.8)',
-                        borderColor: 'rgba(54, 162, 235, 1)',
-                        borderWidth: 2,
-                        borderRadius: 4,
-                        borderSkipped: false,
-                      }
-                    ]
-                  }}
-                  options={{
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                      legend: {
-                        position: 'top',
-                      },
-                      title: {
-                        display: true,
-                        text: `Assessments by ${doctorName || 'Current Doctor'}`,
-                        font: {
-                          size: 14,
-                          weight: 'bold'
+          {/* Right Column */}
+          <div className="right-column">
+            {/* Stats Cards */}
+            <div className="stats-grid">
+              <div className="stat-card">
+                <div className="stat-icon">🧪</div>
+                <div className="stat-content">
+                  <h3>{stats.totalLabs}</h3>
+                  <p>Total Labs</p>
+                </div>
+              </div>
+              
+              <div className="stat-card">
+                <div className="stat-icon">🏥</div>
+                <div className="stat-content">
+                  <h3>{stats.todaysLabs}</h3>
+                  <p>Today's Labs</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Chart Cards Section - Now in Right Column */}
+            <div className="chart-cards-section">
+              {/* Monthly Assessments Chart Card */}
+              <div className="chart-card">
+                <div className="chart-header">
+                  <h3>Monthly Assessments</h3>
+                  <div className="chart-subtitle">
+                    Assessments by {doctorName || 'Current Doctor'}
+                  </div>
+                </div>
+                <div className="chart-wrapper">
+                  <Bar
+                    data={{
+                      labels: [
+                        'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+                      ],
+                      datasets: [
+                        {
+                          label: 'New Assessments',
+                          data: monthlyData,
+                          backgroundColor: 'rgba(54, 162, 235, 0.8)',
+                          borderColor: 'rgba(54, 162, 235, 1)',
+                          borderWidth: 2,
+                          borderRadius: 4,
+                          borderSkipped: false,
                         }
-                      },
-                    },
-                    scales: {
-                      y: {
-                        beginAtZero: true,
-                        ticks: {
-                          stepSize: 1,
+                      ]
+                    }}
+                    options={{
+                      responsive: true,
+                      maintainAspectRatio: false,
+                      plugins: {
+                        legend: {
+                          position: 'top',
                         },
-                        title: {
-                          display: true,
-                          text: 'Number of Assessments'
-                        }
                       },
-                      x: {
-                        title: {
-                          display: true,
-                          text: 'Months'
+                      scales: {
+                        y: {
+                          beginAtZero: true,
+                          ticks: {
+                            stepSize: 1,
+                          },
+                          title: {
+                            display: true,
+                            text: 'Number of Assessments'
+                          }
+                        },
+                        x: {
+                          title: {
+                            display: true,
+                            text: 'Months'
+                          }
                         }
                       }
-                    }
-                  }}
-                />
+                    }}
+                  />
+                </div>
               </div>
-            </div>
 
-            {/* Risk Classification Pie Chart */}
-            <div className="chart-item">
-              <h3>Risk Classification Distribution</h3>
-              <div className="chart-wrapper">
-                <Pie
-                  data={{
-                    labels: ['No DR', 'Mild DR', 'Severe DR'],
-                    datasets: [
-                      {
-                        label: 'Risk Classifications',
-                        data: riskData,
-                        backgroundColor: [
-                          'rgba(75, 192, 192, 0.8)',   // No DR - Green
-                          'rgba(255, 206, 86, 0.8)',   // Mild DR - Yellow
-                          'rgba(255, 99, 132, 0.8)',   // Severe DR - Red
-                        ],
-                        borderColor: [
-                          'rgba(75, 192, 192, 1)',
-                          'rgba(255, 206, 86, 1)',
-                          'rgba(255, 99, 132, 1)',
-                        ],
-                        borderWidth: 2,
-                      }
-                    ]
-                  }}
-                  options={{
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                      legend: {
-                        position: 'top',
-                      },
-                      title: {
-                        display: true,
-                        text: `Risk Analysis by ${doctorName || 'Current Doctor'}`,
-                        font: {
-                          size: 14,
-                          weight: 'bold'
+              {/* Risk Classification Chart Card */}
+              <div className="chart-card">
+                <div className="chart-header">
+                  <h3>Risk Classification Distribution</h3>
+                  <div className="chart-subtitle">
+                    Risk Analysis by {doctorName || 'Current Doctor'}
+                  </div>
+                </div>
+                <div className="chart-wrapper">
+                  <Pie
+                    data={{
+                      labels: ['No DR', 'Mild DR', 'Severe DR'],
+                      datasets: [
+                        {
+                          label: 'Risk Classifications',
+                          data: riskData,
+                          backgroundColor: [
+                            'rgba(75, 192, 192, 0.8)',   // No DR - Green
+                            'rgba(255, 206, 86, 0.8)',   // Mild DR - Yellow
+                            'rgba(255, 99, 132, 0.8)',   // Severe DR - Red
+                          ],
+                          borderColor: [
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(255, 99, 132, 1)',
+                          ],
+                          borderWidth: 2,
                         }
+                      ]
+                    }}
+                    options={{
+                      responsive: true,
+                      maintainAspectRatio: false,
+                      plugins: {
+                        legend: {
+                          position: 'top',
+                        },
                       },
-                    },
-                  }}
-                />
+                    }}
+                  />
+                </div>
               </div>
             </div>
           </div>
