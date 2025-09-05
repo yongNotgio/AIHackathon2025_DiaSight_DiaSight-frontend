@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Bar } from 'react-chartjs-2';
+import { Bar, Doughnut } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
   BarElement,
+  ArcElement,
   Title,
   Tooltip,
   Legend
@@ -15,7 +16,7 @@ import { supabase } from '../supabaseClient';
 import Header from '../components/Header';
 import './NewPatientAssessment.css';
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement, Title, Tooltip, Legend);
 
 const initialLabState = {
   age: '',
@@ -306,9 +307,9 @@ const NewPatientAssessment = () => {
 
   return (
     <div className="assessment-page">
-       <Link to="/dashboard" className="back-btn1">
-                  ← Back to Dashboard
-                </Link>
+      <Link to="/dashboard" className="back-btn1">
+        ← Back to Dashboard
+      </Link>
       <Header />
       <div className="assessment-container">
         {/* Header */}
@@ -407,82 +408,155 @@ const NewPatientAssessment = () => {
             </div>
             
             <div className="result-content">
-              {modelResult.probabilities ? (
-                <div className="chart-wrapper">
-                  <Bar
-                    data={{
-                      labels: Object.keys(modelResult.probabilities),
-                      datasets: [
-                        {
-                          label: 'Probability',
-                          data: Object.values(modelResult.probabilities),
-                          backgroundColor: Object.keys(modelResult.probabilities).map((k) => {
-                            if (k === 'No DR') return 'rgba(75, 192, 75, 0.7)'; // green
-                            if (k === 'Mild DR') return 'rgba(255, 205, 86, 0.7)'; // yellow
-                            if (k === 'Severe DR') return 'rgba(255, 99, 132, 0.7)'; // red
-                            return 'rgba(201, 203, 207, 0.5)'; // default gray
-                          }),
-                          borderColor: Object.keys(modelResult.probabilities).map((k) => {
-                            if (k === modelResult.prediction) return 'rgba(54, 162, 235, 1)';
-                            if (k === 'No DR') return 'rgba(75, 192, 75, 1)';
-                            if (k === 'Mild DR') return 'rgba(255, 205, 86, 1)';
-                            if (k === 'Severe DR') return 'rgba(255, 99, 132, 1)';
-                            return 'rgba(201, 203, 207, 1)';
-                          }),
-                          borderWidth: 2,
-                          borderRadius: 4,
-                          borderSkipped: false,
-                        }
-                      ]
-                    }}
-                    options={{
-                      responsive: true,
-                      maintainAspectRatio: false,
-                      plugins: {
-                        legend: { display: false },
-                        title: {
-                          display: true,
-                          text: 'Prediction Probabilities'
+              {/* Single Chart Container - Bar Chart Only */}
+              <div className="charts-container-single">
+                {/* Enhanced Bar Chart */}
+                {modelResult.probabilities ? (
+                  <div className="chart-wrapper bar-chart-full">
+                    <h4 className="chart-title">Risk Probability Distribution</h4>
+                    <Bar
+                      data={{
+                        labels: Object.keys(modelResult.probabilities),
+                        datasets: [
+                          {
+                            label: 'Probability',
+                            data: Object.values(modelResult.probabilities),
+                            backgroundColor: Object.keys(modelResult.probabilities).map((k) => {
+                              if (k === 'No DR') return 'rgba(16, 185, 129, 0.8)';
+                              if (k === 'Mild DR') return 'rgba(245, 158, 11, 0.8)';
+                              if (k === 'Severe DR') return 'rgba(239, 68, 68, 0.8)';
+                              return 'rgba(156, 163, 175, 0.6)';
+                            }),
+                            borderColor: Object.keys(modelResult.probabilities).map((k) => {
+                              if (k === modelResult.prediction) return '#3b82f6';
+                              if (k === 'No DR') return '#10b981';
+                              if (k === 'Mild DR') return '#f59e0b';
+                              if (k === 'Severe DR') return '#ef4444';
+                              return '#9ca3af';
+                            }),
+                            borderWidth: (context) => {
+                              const label = context.chart.data.labels[context.dataIndex];
+                              return label === modelResult.prediction ? 3 : 2;
+                            },
+                            borderRadius: 8,
+                            borderSkipped: false,
+                            hoverBackgroundColor: Object.keys(modelResult.probabilities).map((k) => {
+                              if (k === 'No DR') return 'rgba(16, 185, 129, 0.9)';
+                              if (k === 'Mild DR') return 'rgba(245, 158, 11, 0.9)';
+                              if (k === 'Severe DR') return 'rgba(239, 68, 68, 0.9)';
+                              return 'rgba(156, 163, 175, 0.8)';
+                            }),
+                            hoverBorderWidth: 4
+                          }
+                        ]
+                      }}
+                      options={{
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        animation: {
+                          duration: 2000,
+                          easing: 'easeInOutQuart'
                         },
-                        tooltip: {
-                          callbacks: {
-                            label: function(context) {
-                              return `Probability: ${(context.raw * 100).toFixed(2)}%`;
+                        plugins: {
+                          legend: { display: false },
+                          title: {
+                            display: false
+                          },
+                          tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            titleColor: '#ffffff',
+                            bodyColor: '#ffffff',
+                            borderColor: '#3b82f6',
+                            borderWidth: 1,
+                            cornerRadius: 8,
+                            callbacks: {
+                              label: function(context) {
+                                const percentage = (context.raw * 100).toFixed(1);
+                                return `${context.label}: ${percentage}%`;
+                              }
+                            }
+                          }
+                        },
+                        scales: {
+                          y: {
+                            beginAtZero: true,
+                            max: 1,
+                            grid: {
+                              color: 'rgba(156, 163, 175, 0.2)',
+                              drawBorder: false
+                            },
+                            ticks: {
+                              color: '#6b7280',
+                              font: {
+                                size: 12,
+                                weight: 'bold'
+                              },
+                              callback: function(value) {
+                                return (value * 100) + '%';
+                              }
+                            },
+                            title: {
+                              display: true,
+                              text: 'Probability (%)',
+                              color: '#374151',
+                              font: {
+                                size: 14,
+                                weight: 'bold'
+                              }
+                            }
+                          },
+                          x: {
+                            grid: {
+                              display: false
+                            },
+                            ticks: {
+                              color: '#374151',
+                              font: {
+                                size: 12,
+                                weight: 'bold'
+                              }
+                            },
+                            title: {
+                              display: true,
+                              text: 'Diagnosis Category',
+                              color: '#374151',
+                              font: {
+                                size: 14,
+                                weight: 'bold'
+                              }
                             }
                           }
                         }
-                      },
-                      scales: {
-                        y: {
-                          beginAtZero: true,
-                          max: 1,
-                          ticks: {
-                            callback: function(value) {
-                              return (value * 100) + '%';
-                            }
-                          }
-                        }
-                      }
-                    }}
-                    height={200}
-                  />
-                </div>
-              ) : (
-                <div className="no-data">No probability data available.</div>
-              )}
+                      }}
+                    />
+                  </div>
+                ) : (
+                  <div className="no-data">No probability data available.</div>
+                )}
+              </div>
               
-              <div className="result-metrics">
-                <div className="metric-card">
-                  <div className="metric-label">Confidence</div>
-                  <div className="metric-value">{modelResult.confidence}</div>
+              {/* Enhanced Metrics Grid */}
+              <div className="result-metrics enhanced-metrics">
+                <div className="metric-card confidence-card">
+                  <div className="metric-icon">🎯</div>
+                  <div className="metric-content">
+                    <div className="metric-label">Model Confidence</div>
+                    <div className="metric-value">{modelResult.confidence}</div>
+                  </div>
                 </div>
-                <div className="metric-card">
-                  <div className="metric-label">Risk Score</div>
-                  <div className="metric-value">{modelResult.risk_score}</div>
+                <div className="metric-card risk-card">
+                  <div className="metric-icon">⚠️</div>
+                  <div className="metric-content">
+                    <div className="metric-label">Risk Level</div>
+                    <div className="metric-value">{modelResult.risk_score}%</div>
+                  </div>
                 </div>
-                <div className="metric-card">
-                  <div className="metric-label">Prediction</div>
-                  <div className="metric-value prediction">{modelResult.prediction}</div>
+                <div className="metric-card prediction-card">
+                  <div className="metric-icon">🔍</div>
+                  <div className="metric-content">
+                    <div className="metric-label">Diagnosis</div>
+                    <div className="metric-value prediction">{modelResult.prediction}</div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -491,7 +565,7 @@ const NewPatientAssessment = () => {
             <div className="result-actions">
               <button 
                 onClick={handleNewAssessment}
-                className="btn-primary new-assessment-btn"
+                className="new-assessment-btn"
               >
                 Submit New Assessment
               </button>

@@ -1,10 +1,14 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+
 .login-page {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   background: white;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
   gap: 10px;
   padding: 10px;
 }
@@ -19,11 +23,11 @@
   border: 1px solid #e2e8f0;
 }
 
-.logo-section {
+.logo-section1 {
   margin-bottom: 15px;
 }
 
-.logo {
+.logo1 {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -72,6 +76,7 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
+  height: 110px;
 }
 
 .form-group label {
@@ -88,7 +93,7 @@
   transition: all 0.2s ease;
   background: #f7fafc;
   /* Touch optimization */
-  min-height: 44px;
+  min-height: 50px;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
