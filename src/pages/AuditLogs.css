@@ -1,242 +1,203 @@
-/* Import Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-
-
 .audit-logs {
   min-height: calc(100vh - 70px);
-  background: #f8fafc;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
-  padding: 1rem 0;
-  padding-top: calc(70px + 1rem);
+  background: #f8f9fa;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  padding: 2rem 0;
+  padding-top: calc(70px + 2rem);
 }
 
 .audit-logs-container {
-  max-width: 1400px;
+  max-width: 95vw;
   margin: 0 auto;
-  padding: 0 30px;
+  padding: 0 20px;
 }
 
-/* Header Section */
 .audit-logs-header {
-  margin-bottom: 1rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  position: relative;
 }
 
-.header-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+.back-button {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #3498db;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 100px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(52, 152, 219, 0.2);
 }
 
-.header-left {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+.back-button:hover {
+  background: #2980b9;
+  transform: translateY(-50%) translateX(-2px);
+  box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
 }
 
-.header-left h1 {
-  color: #1e293b;
+.back-button:active {
+  transform: translateY(-50%) translateX(0);
+  box-shadow: 0 2px 4px rgba(52, 152, 219, 0.2);
+}
+
+.audit-logs-header h1 {
+  color: #2c3e50;
   font-size: 2.5rem;
-  margin: 0;
+  margin: 0 0 0.5rem 0;
   font-weight: 700;
 }
 
-.header-left p {
-  color: #64748b;
-  font-size: 1.125rem;
+.audit-logs-header p {
+  color: #7f8c8d;
+  font-size: 1.1rem;
   margin: 0;
-  font-weight: 400;
 }
 
-.header-actions {
+/* View Toggle */
+.view-toggle {
   display: flex;
-  align-items: center;
-  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+  background: white;
+  border-radius: 8px;
+  padding: 0.5rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.back-btn {
-  background: #3b82f6;
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  text-decoration: none;
-  font-weight: 500;
-  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
-  transition: all 0.3s ease;
-  font-size: 0.875rem;
+.toggle-btn {
+  padding: 0.75rem 1.5rem;
   border: none;
+  background: none;
   cursor: pointer;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.3s;
+  color: #6c757d;
 }
 
-.back-btn:hover {
-  background: #2563eb;
-  transform: translateY(-1px);
+.toggle-btn.active {
+  background: #2196F3;
+  color: white;
 }
 
-/* Filter Section */
-.filter-section {
+.toggle-btn:hover:not(.active) {
+  background: #f8f9fa;
+  color: #2196F3;
+}
+
+/* Search Section */
+.search-section {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   flex-wrap: wrap;
   gap: 1rem;
 }
 
-.filter-bar {
+.search-bar {
   position: relative;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
   flex: 1;
-  max-width: 500px;
+  max-width: 400px;
 }
 
-.filter-label {
-  color: #374151;
-  font-weight: 500;
-  font-size: 0.875rem;
-  white-space: nowrap;
-}
-
-.filter-select {
-  flex: 1;
-  padding: 0.75rem 3rem 0.75rem 1rem;
-  border: 2px solid #e2e8f0;
-  border-radius: 12px;
+.search-input {
+  width: 100%;
+  padding: 0.75rem 1rem 0.75rem 3rem;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
   font-size: 1rem;
-  transition: all 0.3s ease;
+  transition: border-color 0.3s;
   box-sizing: border-box;
-  background: white;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.04);
-  appearance: none;
-  cursor: pointer;
 }
 
-.filter-select:focus {
+.search-input:focus {
   outline: none;
-  border-color: #3b82f6;
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+  border-color: #2196F3;
 }
 
-.filter-icon {
+.search-icon {
   position: absolute;
-  right: 1rem;
+  left: 1rem;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 0.875rem;
-  color: #64748b;
-  pointer-events: none;
+  font-size: 1.2rem;
+  color: #6c757d;
 }
 
 .results-count {
-  color: #64748b;
+  color: #6c757d;
   font-weight: 500;
   white-space: nowrap;
-  font-size: 0.875rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.filter-indicator {
-  color: #3b82f6;
-  font-weight: 600;
-  font-size: 0.8rem;
 }
 
 /* Data Table Section */
 .data-table-section {
   background: white;
-  border-radius: 15px;
+  border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.08);
   overflow: hidden;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
 }
 
-.table-header-section {
-  padding: 1.5rem 2rem;
-  border-bottom: 1px solid #f1f5f9;
-}
-
-.table-header-section h2 {
-  color: #1e293b;
-  font-size: 1.25rem;
+.data-table-section h2 {
+  color: #2c3e50;
+  font-size: 1.5rem;
   margin: 0;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid #e9ecef;
   font-weight: 600;
-}
-
-.data-table-wrapper {
-  overflow-x: auto;
-  scrollbar-width: thin;
-  scrollbar-color: #cbd5e0 #f7fafc;
-}
-
-.data-table-wrapper::-webkit-scrollbar {
-  height: 8px;
-}
-
-.data-table-wrapper::-webkit-scrollbar-track {
-  background: #f7fafc;
-}
-
-.data-table-wrapper::-webkit-scrollbar-thumb {
-  background: #cbd5e0;
-  border-radius: 4px;
-}
-
-.data-table-wrapper::-webkit-scrollbar-thumb:hover {
-  background: #a0aec0;
 }
 
 /* Table Styles */
 .data-table {
-  min-width: 1200px;
+  overflow-x: auto;
 }
 
 .table-header,
 .table-row {
   display: grid;
-  grid-template-columns: 
-    120px    /* Date */
-    60px     /* Age */
-    60px     /* Sex */
-    65px     /* SBP */
-    65px     /* DBP */
-    65px     /* HBP */
-    80px     /* Duration */
-    75px     /* HbA1c */
-    90px     /* Cholesterol */
-    65px     /* LDL */
-    65px     /* HDL */
-    90px     /* Triglycerides */
-    65px     /* Urea */
-    65px     /* BUN */
-    65px     /* Uric */
-    75px     /* eGFR */
-    65px     /* UCR */
-    65px     /* ALT */
-    65px     /* AST */
-    100px;   /* Risk */
-  gap: 0.5rem;
   align-items: center;
   padding: 1rem 2rem;
+  gap: 1rem;
+}
+
+/* Doctors Table Grid */
+.audit-logs [data-view="doctors"] .table-header,
+.audit-logs [data-view="doctors"] .table-row {
+  grid-template-columns: 100px 200px 180px 180px 100px 100px 120px;
+}
+
+/* Patients Table Grid */
+.table-header,
+.table-row {
+  grid-template-columns: 120px 80px 80px 130px 120px 130px 180px 120px;
 }
 
 .table-header {
-  background: #f8fafc;
-  border-bottom: 1px solid #e2e8f0;
+  background: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
   font-weight: 600;
-  color: #475569;
-  font-size: 0.875rem;
+  color: #495057;
+  font-size: 0.9rem;
 }
 
 .table-row {
-  border-bottom: 1px solid #f1f5f9;
-  transition: all 0.2s ease;
+  border-bottom: 1px solid #f1f3f4;
+  transition: background 0.2s;
 }
 
 .table-row:hover {
-  background: #f8fafc;
+  background: #f8f9fa;
 }
 
 .table-row:last-child {
@@ -244,111 +205,118 @@
 }
 
 .table-cell {
-  font-size: 0.875rem;
-  color: #334155;
+  font-size: 0.9rem;
+  color: #495057;
   word-break: break-word;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+}
+
+.font-medium {
+  font-weight: 500;
+  color: #2c3e50;
+}
+
+/* Rating */
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: #ff9800;
+  font-weight: 500;
+}
+
+/* Doctor Name */
+.doctor-name {
+  color: #2196F3;
+  font-weight: 500;
 }
 
 /* Status Badges */
 .status {
   padding: 0.25rem 0.75rem;
   border-radius: 20px;
-  font-size: 0.75rem;
-  font-weight: 600;
+  font-size: 0.8rem;
+  font-weight: 500;
   text-align: center;
   white-space: nowrap;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
 }
 
-.status-no-dr {
-  background: rgba(75, 192, 192, 0.1);
-  color: #0f766e;
-  border: 1px solid rgba(75, 192, 192, 0.3);
+.status-active {
+  background: #d4edda;
+  color: #155724;
 }
 
-.status-mild-dr {
-  background: rgba(255, 206, 86, 0.1);
-  color: #92400e;
-  border: 1px solid rgba(255, 206, 86, 0.3);
+.status-pending {
+  background: #fff3cd;
+  color: #856404;
 }
 
-.status-severe-dr {
-  background: rgba(255, 99, 132, 0.1);
-  color: #dc2626;
-  border: 1px solid rgba(255, 99, 132, 0.3);
+.status-completed {
+  background: #d1ecf1;
+  color: #0c5460;
 }
 
 .status-default {
-  background: #f1f5f9;
-  color: #64748b;
-  border: 1px solid #e2e8f0;
+  background: #e9ecef;
+  color: #6c757d;
 }
 
-/* Loading and Error States */
-.loading-state,
-.error-state {
+/* Action Buttons */
+.action-buttons {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 4rem 2rem;
-  text-align: center;
-  background: white;
-  border-radius: 15px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-  margin: 2rem 0;
+  gap: 0.5rem;
 }
 
-.loading-spinner {
-  width: 40px;
-  height: 40px;
-  border: 4px solid #f3f4f6;
-  border-top: 4px solid #3b82f6;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin-bottom: 1rem;
+.action-btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.3s;
+  white-space: nowrap;
 }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+.contact-btn {
+  background: #2196F3;
+  color: white;
 }
 
-.error-icon {
-  font-size: 3rem;
-  margin-bottom: 1rem;
+.contact-btn:hover {
+  background: #1976D2;
 }
 
-.loading-state p,
-.error-state p {
-  color: #64748b;
-  font-size: 1.125rem;
-  margin: 0;
+.view-btn {
+  background: #17a2b8;
+  color: white;
+  padding: 0.4rem;
+  font-size: 1rem;
+}
+
+.view-btn:hover {
+  background: #138496;
+}
+
+.assign-btn {
+  background: #28a745;
+  color: white;
+  padding: 0.4rem;
+  font-size: 1rem;
+}
+
+.assign-btn:hover {
+  background: #218838;
 }
 
 /* No Results */
 .no-results {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 3rem 2rem;
   text-align: center;
-}
-
-.no-results-icon {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-  opacity: 0.5;
+  padding: 3rem 2rem;
+  color: #6c757d;
 }
 
 .no-results p {
-  color: #64748b;
-  font-size: 1.125rem;
+  font-size: 1.1rem;
   margin: 0;
 }
 
@@ -356,364 +324,435 @@
 .summary-stats {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
+  gap: 1.5rem;
+  margin-top: 2rem;
 }
 
-.stat-card {
+.stat-item {
   background: white;
-  border-radius: 12px;
   padding: 1.5rem;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  transition: transform 0.2s ease;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  text-align: center;
 }
 
-.stat-card:hover {
-  transform: translateY(-2px);
+.stat-item h3 {
+  color: #2c3e50;
+  font-size: 1.1rem;
+  margin: 0 0 0.5rem 0;
+  font-weight: 600;
 }
 
-.stat-icon {
-  font-size: 2rem;
-  background: #f1f5f9;
-  padding: 0.75rem;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 60px;
-  height: 60px;
-}
-
-.stat-icon.no-dr {
-  background: rgba(75, 192, 192, 0.1);
-}
-
-.stat-icon.mild-dr {
-  background: rgba(255, 206, 86, 0.1);
-}
-
-.stat-icon.severe-dr {
-  background: rgba(255, 99, 132, 0.1);
-}
-
-.stat-content h3 {
-  font-size: 1.75rem;
+.stat-item p {
+  color: #2196F3;
+  font-size: 1.5rem;
   font-weight: 700;
-  color: #1e293b;
   margin: 0;
-  line-height: 1;
-}
-
-.stat-content p {
-  font-size: 0.875rem;
-  color: #64748b;
-  margin: 0.25rem 0 0 0;
-  font-weight: 500;
-}
-
-/* Pagination Styles */
-.pagination-section {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.5rem 2rem;
-  border-top: 1px solid #f1f5f9;
-  background: #f8fafc;
-}
-
-.pagination-info {
-  color: #64748b;
-  font-weight: 500;
-  font-size: 0.875rem;
-}
-
-.pagination-controls {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.pagination-btn {
-  background: white;
-  border: 1px solid #e2e8f0;
-  color: #64748b;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  font-weight: 500;
-  font-size: 0.875rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.pagination-btn:hover:not(:disabled) {
-  background: #f8fafc;
-  border-color: #3b82f6;
-  color: #3b82f6;
-}
-
-.pagination-btn:disabled {
-  background: #f1f5f9;
-  color: #94a3b8;
-  cursor: not-allowed;
-}
-
-.pagination-numbers {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  margin: 0 1rem;
-}
-
-.pagination-number {
-  background: white;
-  border: 1px solid #e2e8f0;
-  color: #64748b;
-  padding: 0.5rem 0.75rem;
-  border-radius: 6px;
-  font-weight: 500;
-  font-size: 0.875rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  min-width: 40px;
-}
-
-.pagination-number:hover:not(:disabled):not(.dots) {
-  background: #f8fafc;
-  border-color: #3b82f6;
-  color: #3b82f6;
-}
-
-.pagination-number.active {
-  background: #3b82f6;
-  border-color: #3b82f6;
-  color: white;
-}
-
-.pagination-number.dots {
-  border: none;
-  background: transparent;
-  cursor: default;
-  color: #94a3b8;
-}
-
-.pagination-number.dots:hover {
-  background: transparent;
-  border: none;
-  color: #94a3b8;
 }
 
 /* Responsive Design */
 @media (max-width: 1200px) {
-  .audit-logs-container {
-    padding: 0 20px;
-  }
-  
-  .data-table {
-    min-width: 1000px;
-  }
-  
   .table-header,
   .table-row {
-    grid-template-columns: 
-      100px 50px 50px 55px 55px 55px 70px 65px 80px 55px 55px 80px 55px 55px 55px 65px 55px 55px 55px 90px;
+    grid-template-columns: 100px 70px 70px 110px 100px 110px 150px 100px;
     padding: 0.75rem 1rem;
-    gap: 0.25rem;
+    gap: 0.75rem;
+    font-size: 0.85rem;
   }
 }
 
 @media (max-width: 768px) {
-  .audit-logs-container {
-    padding: 0 15px;
+  .audit-logs {
+    padding: 1rem 0;
+    padding-top: calc(70px + 1rem);
   }
   
-  .header-content {
-    flex-direction: column;
-    gap: 1rem;
-    align-items: stretch;
-  }
-  
-  .header-left h1 {
-    font-size: 2rem;
-  }
-  
-  .filter-section {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 1rem;
-  }
-  
-  .filter-bar {
-    max-width: none;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0.5rem;
-  }
-  
-  .filter-label {
-    white-space: normal;
-  }
-  
-  .results-count {
-    text-align: center;
-  }
-  
-  .table-header-section {
-    padding: 1rem 1.5rem;
-  }
-  
-  .data-table {
-    min-width: 800px;
-  }
-  
-  .table-header,
-  .table-row {
-    grid-template-columns: 
-      80px 40px 40px 45px 45px 45px 60px 55px 70px 45px 45px 70px 45px 45px 45px 55px 45px 45px 45px 80px;
-    padding: 0.75rem 1rem;
-    gap: 0.25rem;
-    font-size: 0.8rem;
-  }
-  
-  .summary-stats {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  
-  .pagination-section {
-    flex-direction: column;
-    gap: 1rem;
-    padding: 1rem;
-  }
-  
-  .pagination-controls {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  
-  .pagination-numbers {
-    margin: 0 0.5rem;
-  }
-  
-  .pagination-number,
-  .pagination-btn {
-    padding: 0.4rem 0.6rem;
-    font-size: 0.8rem;
-  }
-  
-  .pagination-number {
-    min-width: 35px;
-  }
-}
-
-@media (max-width: 480px) {
   .audit-logs-container {
     padding: 0 10px;
   }
   
-  .header-left h1 {
-    font-size: 1.75rem;
+  .audit-logs-header {
+    margin-bottom: 1.5rem;
+    position: static;
+    text-align: left;
   }
   
-  .header-left p {
-    font-size: 1rem;
-  }
-  
-  .back-btn {
-    padding: 0.5rem 0.75rem;
-    font-size: 0.8rem;
-  }
-  
-  .filter-select {
-    padding: 0.6rem 2.5rem 0.6rem 0.75rem;
+  .back-button {
+    position: static;
+    transform: none;
+    margin-bottom: 1rem;
+    padding: 0.6rem 1.2rem;
     font-size: 0.9rem;
   }
   
-  .filter-icon {
-    font-size: 0.75rem;
-    right: 0.75rem;
+  .audit-logs-header h1 {
+    font-size: 1.8rem;
+    margin-bottom: 0.25rem;
   }
   
-  .filter-label {
-    font-size: 0.8rem;
+  .audit-logs-header p {
+    font-size: 1rem;
   }
   
-  .results-count {
-    font-size: 0.8rem;
+  .search-section {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
   }
   
-  .filter-indicator {
-    font-size: 0.75rem;
+  .search-bar {
+    max-width: none;
   }
   
-  .table-header-section {
-    padding: 0.75rem 1rem;
+  .view-toggle {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
   }
   
-  .table-header-section h2 {
-    font-size: 1.1rem;
-  }
-  
-  .data-table {
-    min-width: 700px;
+  .data-table-section h2 {
+    padding: 1rem 1rem;
+    font-size: 1.3rem;
   }
   
   .table-header,
   .table-row {
+    grid-template-columns: 80px 50px 50px 80px 80px 80px 100px 70px;
+    padding: 0.75rem 0.5rem;
+    gap: 0.25rem;
+    font-size: 0.8rem;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  
+  .action-btn {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.8rem;
+  }
+  
+  .wide-table .table-header,
+  .wide-table .table-row {
+    min-width: 800px;
     grid-template-columns: 
-      70px 35px 35px 40px 40px 40px 50px 45px 60px 40px 40px 60px 40px 40px 40px 45px 40px 40px 40px 70px;
-    padding: 0.5rem 0.75rem;
-    gap: 0.2rem;
+      100px    /* Date */
+      40px     /* Age */
+      40px     /* Sex */
+      45px     /* SBP */
+      45px     /* DBP */
+      45px     /* HBP */
+      60px     /* Duration */
+      55px     /* HbA1c */
+      65px     /* Cholesterol */
+      45px     /* LDL */
+      45px     /* HDL */
+      65px     /* Triglycerides */
+      45px     /* Urea */
+      45px     /* BUN */
+      45px     /* Uric */
+      55px     /* eGFR */
+      45px     /* UCR */
+      45px     /* ALT */
+      45px     /* AST */
+      80px;    /* Risk */
+  }
+  
+  .wide-table .table-cell {
+    padding: 0.5rem 0.25rem;
     font-size: 0.75rem;
   }
-  
-  .stat-card {
-    padding: 1rem;
+}
+
+@media (max-width: 480px) {
+  .audit-logs {
+    padding: 0.5rem 0;
+    padding-top: calc(70px + 0.5rem);
   }
   
-  .stat-icon {
+  .audit-logs-container {
+    padding: 0 5px;
+  }
+  
+  .back-button {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+  
+  .audit-logs-header h1 {
     font-size: 1.5rem;
-    padding: 0.5rem;
-    min-width: 50px;
-    height: 50px;
   }
   
-  .stat-content h3 {
-    font-size: 1.5rem;
+  .audit-logs-header p {
+    font-size: 0.9rem;
   }
   
-  .stat-content p {
-    font-size: 0.8rem;
+  .toggle-btn {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
+  }
+  
+  .search-input {
+    padding: 0.6rem 0.75rem 0.6rem 2.5rem;
+    font-size: 0.9rem;
+  }
+  
+  .search-icon {
+    font-size: 1rem;
+    left: 0.75rem;
+  }
+  
+  .data-table-section h2 {
+    padding: 0.75rem 0.5rem;
+    font-size: 1.1rem;
+  }
+  
+  .table-header,
+  .table-row {
+    padding: 0.5rem 0.25rem;
+    gap: 0.1rem;
+    font-size: 0.7rem;
+    grid-template-columns: 60px 40px 40px 60px 60px 60px 80px 50px;
+  }
+  
+  .data-table {
+    overflow-x: scroll;
+  }
+  
+  .action-btn {
+    padding: 0.25rem 0.4rem;
+    font-size: 0.7rem;
   }
   
   .summary-stats {
     grid-template-columns: 1fr;
+    gap: 1rem;
   }
   
-  .pagination-section {
-    padding: 0.75rem;
+  .stat-item {
+    padding: 1rem;
   }
   
-  .pagination-controls {
+  .stat-item h3 {
+    font-size: 1rem;
+  }
+  
+  .stat-item p {
+    font-size: 1.3rem;
+  }
+  
+  .wide-table .table-header,
+  .wide-table .table-row {
+    min-width: 620px;
+    grid-template-columns: 
+      80px     /* Date */
+      35px     /* Age */
+      35px     /* Sex */
+      40px     /* SBP */
+      40px     /* DBP */
+      40px     /* HBP */
+      50px     /* Duration */
+      45px     /* HbA1c */
+      55px     /* Cholesterol */
+      40px     /* LDL */
+      40px     /* HDL */
+      55px     /* Triglycerides */
+      40px     /* Urea */
+      40px     /* BUN */
+      40px     /* Uric */
+      45px     /* eGFR */
+      40px     /* UCR */
+      40px     /* ALT */
+      40px     /* AST */
+      70px;    /* Risk */
+  }
+  
+  .wide-table .table-cell {
+    padding: 0.4rem 0.15rem;
+    font-size: 0.7rem;
+  }
+}
+
+/* Loading and Error States */
+.loading, .error {
+  text-align: center;
+  padding: 3rem 2rem;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  margin: 2rem 0;
+}
+
+.loading {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+
+.error {
+  background: #ffebee;
+  color: #d32f2f;
+}
+
+/* Lab Inputs Display Styles */
+.lab-inputs-header {
+  min-width: 300px;
+}
+
+.lab-inputs-cell {
+  min-width: 300px;
+  max-width: 400px;
+}
+
+.lab-inputs-display {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background: #f8f9fa;
+  border-radius: 6px;
+  border: 1px solid #e9ecef;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.lab-input-item {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  border: 1px solid #dee2e6;
+  font-size: 0.8rem;
+}
+
+.lab-label {
+  font-weight: 600;
+  color: #495057;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.1rem;
+}
+
+.lab-value {
+  color: #212529;
+  font-weight: 500;
+  font-size: 0.85rem;
+}
+
+.no-data {
+  color: #6c757d;
+  font-style: italic;
+  padding: 1rem;
+  text-align: center;
+}
+
+/* Wide table styles for separate columns */
+.wide-table {
+  overflow-x: auto;
+  min-width: 100%;
+  border-radius: 8px;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e0 #f7fafc;
+}
+
+.wide-table::-webkit-scrollbar {
+  height: 8px;
+}
+
+.wide-table::-webkit-scrollbar-track {
+  background: #f7fafc;
+  border-radius: 4px;
+}
+
+.wide-table::-webkit-scrollbar-thumb {
+  background: #cbd5e0;
+  border-radius: 4px;
+}
+
+.wide-table::-webkit-scrollbar-thumb:hover {
+  background: #a0aec0;
+}
+
+.wide-table .table-header,
+.wide-table .table-row {
+  display: grid;
+  grid-template-columns: 
+    120px    /* Date */
+    50px     /* Age */
+    50px     /* Sex */
+    55px     /* SBP */
+    55px     /* DBP */
+    55px     /* HBP */
+    70px     /* Duration */
+    65px     /* HbA1c */
+    80px     /* Cholesterol */
+    55px     /* LDL */
+    55px     /* HDL */
+    80px     /* Triglycerides */
+    55px     /* Urea */
+    55px     /* BUN */
+    55px     /* Uric */
+    65px     /* eGFR */
+    55px     /* UCR */
+    55px     /* ALT */
+    55px     /* AST */
+    100px;   /* Risk */
+  gap: 0.4rem;
+  min-width: 1180px;
+}
+
+.wide-table .table-cell {
+  padding: 0.75rem 0.4rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 0.85rem;
+  border-right: 1px solid #f1f3f4;
+}
+
+.wide-table .table-cell:last-child {
+  border-right: none;
+}
+
+/* Responsive adjustments for lab inputs */
+@media (max-width: 768px) {
+  .lab-inputs-header,
+  .lab-inputs-cell {
+    min-width: 250px;
+    max-width: 300px;
+  }
+  
+  .lab-inputs-display {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     gap: 0.25rem;
+    padding: 0.25rem;
   }
   
-  .pagination-numbers {
-    margin: 0 0.25rem;
-    gap: 0.125rem;
+  .lab-input-item {
+    padding: 0.2rem 0.4rem;
   }
   
-  .pagination-number,
-  .pagination-btn {
-    padding: 0.3rem 0.5rem;
-    font-size: 0.75rem;
+  .lab-label {
+    font-size: 0.65rem;
   }
   
-  .pagination-number {
-    min-width: 30px;
-  }
-  
-  .pagination-info {
+  .lab-value {
     font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .lab-inputs-header,
+  .lab-inputs-cell {
+    min-width: 200px;
+    max-width: 250px;
+  }
+  
+  .lab-inputs-display {
+    grid-template-columns: 1fr 1fr;
+    max-height: 150px;
   }
 }

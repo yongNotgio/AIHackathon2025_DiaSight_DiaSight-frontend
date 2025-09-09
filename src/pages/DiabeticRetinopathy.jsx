@@ -148,7 +148,7 @@ const DiabeticRetinopathy = () => {
               <h2>AI-Powered Early Detection</h2>
             </div>
             <p>
-              Our DiaSight system uses advanced artificial intelligence to analyze retinal images and detect early signs 
+              Our DiaSight system uses advanced artificial intelligence to analyze and detect early signs 
               of diabetic retinopathy. This technology enables:
             </p>
             <ul className="ai-benefits">
