@@ -215,16 +215,16 @@ const AuditLogs = () => {
             <p>{auditLogs.length} logs</p>
           </div>
           <div className="stat-item">
-            <h3>Low Risk</h3>
-            <p>{auditLogs.filter(log => log.riskClassification.toLowerCase().includes('low')).length} cases</p>
+            <h3>No DR</h3>
+            <p>{auditLogs.filter(log => (log.riskClassification || '').toLowerCase().trim() === 'no dr').length} cases</p>
           </div>
           <div className="stat-item">
-            <h3>Moderate Risk</h3>
-            <p>{auditLogs.filter(log => log.riskClassification.toLowerCase().includes('moderate')).length} cases</p>
+            <h3>Mild DR</h3>
+            <p>{auditLogs.filter(log => (log.riskClassification || '').toLowerCase().trim() === 'mild dr').length} cases</p>
           </div>
           <div className="stat-item">
-            <h3>High Risk</h3>
-            <p>{auditLogs.filter(log => log.riskClassification.toLowerCase().includes('high')).length} cases</p>
+            <h3>Severe DR</h3>
+            <p>{auditLogs.filter(log => (log.riskClassification || '').toLowerCase().trim() === 'severe dr').length} cases</p>
           </div>
         </div>
       </div>

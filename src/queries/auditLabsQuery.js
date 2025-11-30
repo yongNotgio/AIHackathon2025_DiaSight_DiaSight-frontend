@@ -33,6 +33,10 @@ export const fetchAuditLogs = async () => {
           alt,
           ast,
           created_by
+        ),
+        risk_classification:risk_classification_id (
+          id,
+          risk_class
         )
       `)
       .order('created_at', { ascending: false });
@@ -55,13 +59,12 @@ export const fetchAuditLogs = async () => {
       doctorId: log.doctor_id,
       doctorName: log.doctors 
         ? `${log.doctors.first_name} ${log.doctors.last_name}`.trim()
-        : `Doctor ${log.doctor_id}`, // Fallback if doctor data not found
+        : `Doctor ${log.doctor_id}`,
       labId: log.lab_id,
-      // Include all lab data
       labData: log.labs || {},
-      // Include all lab inputs from the jsonb field as backup
       allLabInputs: log.all_lab_inputs,
-      riskClassification: log.risk_class || log.risk_classification || 'Pending Classification'
+      riskClassificationId: log.risk_classification ? log.risk_classification.id : log.risk_classification_id,
+      riskClassification: (log.risk_classification && log.risk_classification.risk_class) || log.risk_class || log.risk_classification || 'Pending Classification'
     }));
 
     return { data: transformedData, error: null };

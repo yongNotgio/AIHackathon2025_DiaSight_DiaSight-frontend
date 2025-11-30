@@ -47,8 +47,8 @@ const LoginPage = () => {
   return (
     <div className="login-page">
       <div className="login-form-container">
-        <div className="logo-section">
-          <div className="logo">
+        <div className="logo-section1">
+          <div className="logo1">
             <img src={logo1} alt="DiaSight Logo" className="logo-icon" />
             <img src={diasight} alt="DiaSight" className="logo-text" />
           </div>
@@ -83,6 +83,10 @@ const LoginPage = () => {
               onChange={handleChange}
               required
               placeholder="Enter your password"
+              autoComplete="new-password"
+              autoCorrect="off"
+              autoCapitalize="off"
+              spellCheck="false"
             />
           </div>
 

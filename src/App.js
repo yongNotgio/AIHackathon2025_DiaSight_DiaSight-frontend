@@ -6,6 +6,7 @@ import LoginPage from './pages/LoginPage';
 import Dashboard from './pages/Dashboard';
 import NewPatientAssessment from './pages/NewPatientAssessment';
 import AuditLogs from './pages/AuditLogs';
+import DiabeticRetinopathy from './pages/DiabeticRetinopathy';
 
 function PrivateRoute({ children }) {
   const doctor = localStorage.getItem('currentDoctor');
@@ -51,6 +52,7 @@ function App() {
               <Dashboard />
             </PrivateRoute>
           } />
+          <Route path="/diabetic-retinopathy" element={<DiabeticRetinopathy />} />
           <Route path="/new-patient-assessment" element={
             <PrivateRoute>
               <NewPatientAssessment />
