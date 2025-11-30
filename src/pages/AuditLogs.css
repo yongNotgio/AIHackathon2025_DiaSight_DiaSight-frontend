@@ -1,9 +1,16 @@
 .audit-logs {
   min-height: calc(100vh - 70px);
+<<<<<<< HEAD
   background: #f8f9fa;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
   padding: 2rem 0;
   padding-top: calc(70px + 2rem);
+=======
+  background: #f8fafc;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  padding: 1rem 0;
+  padding-top: calc(70px + 1rem);
+>>>>>>> parent of c8e396c (Revamp assessment UI and enhance chart display)
 }
 
 .audit-logs-container {

@@ -216,6 +216,7 @@ const NewPatientAssessment = () => {
 
           {error && <div className="error-message">{error}</div>}
 
+<<<<<<< HEAD
           <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 24 }}>
             {step > 1 && step < 5 && (
               <button type="button" className="form-back-btn" onClick={() => setStep(step - 1)}>
@@ -301,6 +302,201 @@ const NewPatientAssessment = () => {
                 <div><b>Prediction:</b> {modelResult.prediction}</div>
               </div>
             </div>
+=======
+  return (
+    <div className="assessment-page">
+       <Link to="/dashboard" className="back-btn1">
+                  ← Back to Dashboard
+                </Link>
+      <Header />
+      <div className="assessment-container">
+        {/* Header */}
+        <div className="assessment-header">
+          <div className="header-content">
+            <div className="header-left">
+              <div className="header-top">
+                <h1>New Patient Assessment</h1>
+              </div>
+              <p className="header-subtitle">Lab Results & Diabetic Retinopathy Prediction</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Step Progress */}
+        <div className="step-progress">
+          <div className="progress-bar">
+            <div 
+              className="progress-fill" 
+              style={{ width: `${isSubmitted ? '100%' : ((step - 1) / (steps.length - 1)) * 100}%` }}
+            ></div>
+          </div>
+          <div className="steps">
+            {steps.map((stepItem) => (
+              <div 
+                key={stepItem.number}
+                className={`step ${step >= stepItem.number ? 'active' : ''} ${step > stepItem.number || (step === 5 && isSubmitted) ? 'completed' : ''}`}
+              >
+                <div className="step-circle">
+                  {step > stepItem.number || (step === 5 && isSubmitted) ? '✓' : stepItem.number}
+                </div>
+                <div className="step-info">
+                  <div className="step-title">{stepItem.title}</div>
+                  <div className="step-description">{stepItem.description}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Form Content - Show until results are available */}
+        {!modelResult && (
+          <div className="assessment-form">
+            <div className="form-card">
+              <form onSubmit={handleSubmit}>
+                {renderStepContent()}
+                
+                {error && (
+                  <div className="error-message">
+                    {error}
+                  </div>
+                )}
+                
+                {/* Navigation Buttons */}
+                <div className="form-navigation">
+                  {step > 1 && !isSubmitted && (
+                    <button 
+                      type="button" 
+                      onClick={() => setStep(step - 1)}
+                      className="btn-secondary"
+                    >
+                      Back
+                    </button>
+                  )}
+                  
+                  {step < 5 ? (
+                    <button 
+                      type="button" 
+                      onClick={() => setStep(step + 1)}
+                      className="btn-primary"
+                    >
+                      Next
+                    </button>
+                  ) : (
+                    <button 
+                      type="button" 
+                      onClick={handleSubmitClick}
+                      disabled={loading || isSubmitted}
+                      className="btn-primary submit-btn"
+                    >
+                      {loading ? 'Submitting...' : isSubmitted ? 'Submitted ✓' : 'Submit Assessment'}
+                    </button>
+                  )}
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+
+        {/* Model Result - Only show after submission and results are available */}
+        {modelResult && isSubmitted && (
+          <div className="model-result-card">
+            <div className="result-header">
+              <div className="result-icon">🎯</div>
+              <h3>AI Prediction Results</h3>
+            </div>
+            
+            <div className="result-content">
+              {modelResult.probabilities ? (
+                <div className="chart-wrapper">
+                  <Bar
+                    data={{
+                      labels: Object.keys(modelResult.probabilities),
+                      datasets: [
+                        {
+                          label: 'Probability',
+                          data: Object.values(modelResult.probabilities),
+                          backgroundColor: Object.keys(modelResult.probabilities).map((k) => {
+                            if (k === 'No DR') return 'rgba(75, 192, 75, 0.7)'; // green
+                            if (k === 'Mild DR') return 'rgba(255, 205, 86, 0.7)'; // yellow
+                            if (k === 'Severe DR') return 'rgba(255, 99, 132, 0.7)'; // red
+                            return 'rgba(201, 203, 207, 0.5)'; // default gray
+                          }),
+                          borderColor: Object.keys(modelResult.probabilities).map((k) => {
+                            if (k === modelResult.prediction) return 'rgba(54, 162, 235, 1)';
+                            if (k === 'No DR') return 'rgba(75, 192, 75, 1)';
+                            if (k === 'Mild DR') return 'rgba(255, 205, 86, 1)';
+                            if (k === 'Severe DR') return 'rgba(255, 99, 132, 1)';
+                            return 'rgba(201, 203, 207, 1)';
+                          }),
+                          borderWidth: 2,
+                          borderRadius: 4,
+                          borderSkipped: false,
+                        }
+                      ]
+                    }}
+                    options={{
+                      responsive: true,
+                      maintainAspectRatio: false,
+                      plugins: {
+                        legend: { display: false },
+                        title: {
+                          display: true,
+                          text: 'Prediction Probabilities'
+                        },
+                        tooltip: {
+                          callbacks: {
+                            label: function(context) {
+                              return `Probability: ${(context.raw * 100).toFixed(2)}%`;
+                            }
+                          }
+                        }
+                      },
+                      scales: {
+                        y: {
+                          beginAtZero: true,
+                          max: 1,
+                          ticks: {
+                            callback: function(value) {
+                              return (value * 100) + '%';
+                            }
+                          }
+                        }
+                      }
+                    }}
+                    height={200}
+                  />
+                </div>
+              ) : (
+                <div className="no-data">No probability data available.</div>
+              )}
+              
+              <div className="result-metrics">
+                <div className="metric-card">
+                  <div className="metric-label">Confidence</div>
+                  <div className="metric-value">{modelResult.confidence}</div>
+                </div>
+                <div className="metric-card">
+                  <div className="metric-label">Risk Score</div>
+                  <div className="metric-value">{modelResult.risk_score}</div>
+                </div>
+                <div className="metric-card">
+                  <div className="metric-label">Prediction</div>
+                  <div className="metric-value prediction">{modelResult.prediction}</div>
+                </div>
+              </div>
+            </div>
+
+            {/* New Assessment Button */}
+            <div className="result-actions">
+              <button 
+                onClick={handleNewAssessment}
+                className="btn-primary new-assessment-btn"
+              >
+                Submit New Assessment
+              </button>
+            </div>
+          </div>
+>>>>>>> parent of c8e396c (Revamp assessment UI and enhance chart display)
         )}
       </div>
     </div>
